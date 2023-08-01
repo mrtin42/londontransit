@@ -21,9 +21,9 @@ module.exports = {
 
 			if (busData.timeToStation < 60) {
 				var ArrivalTime = Math.floor(busData.timeToStation / 60)
-				var DeclareArrival = `It will arrive in approximately **${ArrivalTime} minute(s)**`
+				var DeclareArrival = `It should arrive in approximately **${ArrivalTime} minute(s)**`
 			} else {
-				var DeclareArrival = `It will arrive in **less than a minute**`
+				var DeclareArrival = `It should arrive in **less than a minute**`
 			}
 
 			const embed = new EmbedBuilder()

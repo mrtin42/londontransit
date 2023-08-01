@@ -10,9 +10,9 @@ module.exports = {
 
 	async execute(interaction) {
 
-        const requestedLine = await axios.get(`https://api.tfl.gov.uk/Line/Search/${interaction.options.getString('line')}?modes=tube,dlr,tram,elizabeth-line,overground`);
+        const requestedLine = await axios.get(`https://api.tfl.gov.uk/Line/Search/${interaction.options.getString('line')}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,dlr,tram,elizabeth-line,overground`);
 
-        const response = await axios.get(`https://api.tfl.gov.uk/Line/${requestedLine.data.searchMatches[0].lineId}/Status`);
+        const response = await axios.get(`https://api.tfl.gov.uk/Line/${requestedLine.data.searchMatches[0].lineId}/Status?app_key=32165e2dbd9e4da9a804f88d7495d9d3`);
 
         const embed = new EmbedBuilder()
         .setTitle(`${response.data[0].name} `)
