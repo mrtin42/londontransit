@@ -56,7 +56,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
-			await interaction.reply({ content: 'There was an error while executing this command!'});
+			await interaction.editReply({ content: 'There was an error while executing this command!'});
 		
 	}
 });
