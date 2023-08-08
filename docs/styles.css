@@ -10,6 +10,7 @@ html::-webkit-scrollbar {
 }
 
 body {
+    height: 40vh;
     margin: 0;
     font-family: Arial;
     font-size: 16px;
