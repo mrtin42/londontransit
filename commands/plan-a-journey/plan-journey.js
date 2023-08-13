@@ -31,15 +31,15 @@ module.exports = {
       const destination = interaction.options.getString('destination');
 
     
-      const originNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${origin}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus&includeHubs=false`);
-      const destinNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${destination}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus&includeHubs=false`);
+      const originNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${origin}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail&includeHubs=false`);
+      const destinNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${destination}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail&includeHubs=false`);
 
       if (!originNaptan.data.matches[0]) {
         await interaction.editReply('Origin station was not found')
       } else if (!destinNaptan.data.matches[0]) {
         await interaction.editReply('Destination station was not found')
       } else {
-        const response = await axios.get(`https://api.tfl.gov.uk/Journey/JourneyResults/${originNaptan.data.matches[0].id}/to/${destinNaptan.data.matches[0].id}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&mode=tube,bus`);
+        const response = await axios.get(`https://api.tfl.gov.uk/Journey/JourneyResults/${originNaptan.data.matches[0].id}/to/${destinNaptan.data.matches[0].id}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&mode=tube,bus,national-rail,walking`);
 
 
         const embed = new EmbedBuilder()
@@ -65,7 +65,25 @@ module.exports = {
               name: `${journeyPlan.instruction.detailed} - ${journeyPlan.duration}min`,
               value: `${journeyPlan.departurePoint.commonName} stop ${journeyPlan.departurePoint.stopLetter} to ${journeyPlan.arrivalPoint.commonName} stop ${journeyPlan.arrivalPoint.stopLetter}`
             });
-          };
+          } else if (journeyPlan.mode.id == "walking") {
+
+          const originFormatted = originNaptan.data.matches[0].name.replace(/ /g, '%20');
+          const destinationFormatted = destinNaptan.data.matches[0].name.replace(/ /g, '%20');
+            embed.addFields({
+              name: `${journeyPlan.instruction.summary}- ${journeyPlan.duration}min`,
+              value: `*Displaying walking options within the embed would enlarge it and be obtrusive, so please refer to the [TfL website](https://tfl.gov.uk/plan-a-journey/results?InputFrom=${originFormatted}&InputTo=${destinationFormatted}&app_key=32165e2dbd9e4da9a804f88d7495d9d3), Tfl Go or a navigation app for more information.*`
+            });
+          } else if (journeyPlan.mode.id == "national-rail") {
+            embed.addFields({
+              name: `${journeyPlan.routeOptions[0].name} - ${journeyPlan.duration}min`,
+              value: `from ${journeyPlan.departurePoint.commonName} to ${journeyPlan.arrivalPoint.commonName}`
+            });
+          } else if (journeyPlan.mode.id == "dlr") {
+            embed.addFields({
+              name: `${journeyPlan.routeOptions[0].name} - ${journeyPlan.duration}min`,
+              value: `from ${journeyPlan.departurePoint.commonName} to ${journeyPlan.arrivalPoint.commonName}`
+            });
+          }
         }
 
         
@@ -75,5 +93,5 @@ module.exports = {
       }
 
 
-    },
+    }
   };
