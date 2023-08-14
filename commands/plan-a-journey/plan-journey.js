@@ -82,6 +82,11 @@ module.exports = {
               name: `${journeyPlan.routeOptions[0].name} - ${journeyPlan.duration}min`,
               value: `from ${journeyPlan.departurePoint.commonName} to ${journeyPlan.arrivalPoint.commonName}`
             });
+          } else if (journeyPlan.mode.id == "tram") {
+            embed.addFields({
+              name: `${journeyPlan.routeOptions[0].lineIdentifier.name} - ${journeyPlan.duration}min`,
+              value: `from ${journeyPlan.departurePoint.commonName} to ${journeyPlan.arrivalPoint.commonName}`
+            });
           }
         }
 
