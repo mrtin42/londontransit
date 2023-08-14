@@ -87,6 +87,13 @@ module.exports = {
               name: `${journeyPlan.routeOptions[0].lineIdentifier.name} - ${journeyPlan.duration}min`,
               value: `from ${journeyPlan.departurePoint.commonName} to ${journeyPlan.arrivalPoint.commonName}`
             });
+          } else if (journeyPlan.mode.id == "river-bus") {
+            embed.addFields({
+              name: `${journeyPlan.instruction.detailed} - ${journeyPlan.duration}min`,
+              value: `from ${journeyPlan.departurePoint.commonName} to ${journeyPlan.arrivalPoint.commonName}`
+            })
+          } else if (journeyPlan.mode.id == "overground") {
+            
           }
         }
 
