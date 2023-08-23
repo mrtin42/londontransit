@@ -33,7 +33,7 @@ To view this bot on top.gg, click [here](https://top.gg/bot/1109170357568557156)
 
 Your help is always appreciated, as I am one man working on this and teamwork makes the dream work. If you would like to contribute, please feel free to fork this repository and make a pull request. If you would like to discuss a feature, please open an issue. CONTRIBUTING.md will be coming soon.
 
-IF you've found a bug, you can either open an issue or email me at [bugs@londontransit.xyz](mailto:bugs@londontransit.xyz)
+If you've found a bug, you can either open an issue or email me at [bugs@londontransit.xyz](mailto:bugs@londontransit.xyz)
 
 ## Commands
 
