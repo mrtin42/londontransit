@@ -1,4 +1,17 @@
+# node modules
 node_modules
+
+# local secrets
 .env
+
+# npm lock files
 package-lock.json
+
+# macOS finder metadata
 .DS_Store
+
+# jetbrains
+.idea
+
+# vscode
+.vscode

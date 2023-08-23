@@ -93,6 +93,10 @@ module.exports = {
               value: `from ${journeyPlan.departurePoint.commonName} to ${journeyPlan.arrivalPoint.commonName}`
             })
           } else if (journeyPlan.mode.id == "overground") {
+            embed.addFields({
+              name: `${journeyPlan.routeOptions[0].name} - ${journeyPlan.duration}min`,
+              value: `from ${journeyPlan.departurePoint.commonName} to ${journeyPlan.arrivalPoint.commonName}`
+            });
             
           }
         }

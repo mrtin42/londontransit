@@ -4,8 +4,8 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('tubestatus')
-		.setDescription('fetches the current disruption status of london underground lines'),
+		.setName('servicestatus')
+		.setDescription('fetches the current disruption status of london transport services'),
 	async execute(interaction) {
         
         await interaction.deferReply();
