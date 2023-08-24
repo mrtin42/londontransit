@@ -171,3 +171,12 @@ body {
     padding: 0;
     font-weight: 1000;
 }
+
+.feature-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #0a1047;
+    color: #f2f2f2;
+}

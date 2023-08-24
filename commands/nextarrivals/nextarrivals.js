@@ -13,6 +13,7 @@ module.exports = {
     ),
 
     async execute(interaction) {
+      await interaction.deferReply();
       const stationName = interaction.options.getString('station');
       const response = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${stationName}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube&includeHubs=false`);
 
