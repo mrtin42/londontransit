@@ -180,3 +180,7 @@ body {
     background-color: #0a1047;
     color: #f2f2f2;
 }
+
+.feature-content img {
+    width: 13rem;
+}
