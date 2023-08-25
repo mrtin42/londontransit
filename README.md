@@ -1,8 +1,8 @@
 <a href="https://londontransit.xyz">
-    <img src="./docs/assets/images/botlogo.svg" alt="LOGO" title="LondonTransit" align="center" height="120"/>
+    <img src="./docs/assets/images/botlogo.svg" alt="LOGO" title="LondonTransit" align="right" height="60"/>
 </a>
 
----
+# LondonTransit
 
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![codebeat badge](https://codebeat.co/badges/4db1b9fd-e976-4203-93be-671952d6f00f)](https://codebeat.co/projects/github-com-t-ub3-londontransit-main)
