@@ -220,8 +220,6 @@ body {
     display: none;
 }
 
-/* display breaks on mobile */
-
 @media screen and (max-width: 768px) {
     .mobilebreak {
         display: block;
