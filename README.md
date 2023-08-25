@@ -1,5 +1,5 @@
 <a href="https://londontransit.xyz">
-    <img src="./docs/assets/images/botlogo.svg" alt="LOGO" title="LondonTransit" align="left" height="60"/>
+    <img src="./docs/assets/images/botlogo.svg" alt="LOGO" title="LondonTransit" height="60"/>
 </a>
 
 ---
