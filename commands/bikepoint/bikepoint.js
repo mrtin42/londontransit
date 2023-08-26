@@ -24,27 +24,41 @@ module.exports = {
             const dockId = response.data[0].id;
             const dockData = await axios.get(`https://api.tfl.gov.uk/BikePoint/${dockId}?app_key=32165e2dbd9e4da9a804f88d7495d9d3`);
 
-            const embed = new EmbedBuilder()
-                .setTitle(`${dockData.data.commonName}`)
-                .setAuthor(
-                    {name: 'Cycle Dock Information', iconURL: 'https://media.tubee.dev/assets/images/image01.png'}
-                )
-                .setColor(0x000F9F)
-                .setTimestamp()
-                .setFooter(
-                    {text: 'Powered by Transport for London'}
-                )
-                .addFields(
-                    {
-                        name: 'Docked Bikes',
-                        value: `${dockData.data.additionalProperties[6].value}`,
-                        inline: true
-                    },{
-                        name: 'Total Docks',
-                        value: `${dockData.data.additionalProperties[8].value}`,
-                        inline: true
-                    },
-                );
+                const embed = new EmbedBuilder()
+                    .setTitle(`${dockData.data.commonName}`)
+                    .setAuthor(
+                        {name: 'Cycle Dock Information', iconURL: 'https://media.tubee.dev/assets/images/image01.png'}
+                    )
+                    .setColor(0x000F9F)
+                    .setTimestamp()
+                    .setFooter(
+                        {text: 'Powered by Transport for London'}
+                    )
+                    .addFields(
+                        {
+                            name: 'Docked Bikes',
+                            value: `${dockData.data.additionalProperties[6].value}`,
+                            inline: true
+                        },
+                        {
+                            name: 'Docked Bikes (E-Bikes)',
+                            value: `${dockData.data.additionalProperties[10].value}`,
+                            inline: true
+                        },
+                        {
+                            name: 'Total Docks',
+                            value: `${dockData.data.additionalProperties[8].value}`
+                        },
+                        {
+                            name: 'Latitude',
+                            value: `${dockData.data.lat}`,
+                            inline: true
+                        },
+                        {
+                            name: 'Longitude',
+                            value: `${dockData.data.lon}`,
+                            inline: true
+                        }    );
 
             
 
