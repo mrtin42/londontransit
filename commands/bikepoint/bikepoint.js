@@ -35,10 +35,18 @@ module.exports = {
                     {text: 'Powered by Transport for London'}
                 )
                 .addFields(
-                    {name: 'Bikes', value: `${dockData.data.additionalProperties[6].value}`},
-                    {name: 'Docks', value: `${dockData.data.additionalProperties[7].value}`},
-                    {name: 'Status', value: `${dockData.data.additionalProperties[8].value}`}
+                    {
+                        name: 'Docked Bikes',
+                        value: `${dockData.data.additionalProperties[6].value}`,
+                        inline: true
+                    },{
+                        name: 'Total Docks',
+                        value: `${dockData.data.additionalProperties[8].value}`,
+                        inline: true
+                    },
                 );
+
+            
 
             try {
                 await interaction.editReply({
