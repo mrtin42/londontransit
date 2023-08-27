@@ -17,7 +17,7 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setTitle(`${response.data[0].name} `)
         .setAuthor(
-          { name: 'Line Status', iconURL: 'https://media.tubee.dev/Images/Underground_(no_text).svg.png'}
+          { name: 'Line Status', iconURL: 'https://assets.app.londontransit.xyz/branding/tfl/roundels/pngimage/roundel-tube.png'}
         )
         .setColor(0x000F9F)
         .setTimestamp()

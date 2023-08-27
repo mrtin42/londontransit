@@ -28,7 +28,7 @@ module.exports = {
                     .setTitle(`${dockData.data.commonName}`)
                     .setAuthor({
                             name: 'Cycle Dock Information',
-                            iconURL: 'https://assets.app.londontransit.xyz/branding/roundels/pngimage/roundel-tfl.png'
+                            iconURL: 'https://assets.app.londontransit.xyz/branding/tfl/roundels/pngimage/roundel-tfl.png'
                         })
                     .setColor(0x000F9F)
                     .setTimestamp()

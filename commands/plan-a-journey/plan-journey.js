@@ -45,7 +45,7 @@ module.exports = {
         const embed = new EmbedBuilder()
           .setTitle(`${origin} to ${destination}`)
           .setAuthor(
-            { name: 'Journey Planner', iconURL: 'https://media.tubee.dev/assets/images/image01.png'}
+            { name: 'Journey Planner', iconURL: 'https://assets.app.londontransit.xyz/branding/tfl/roundels/pngimage/roundel-tube.png'}
           )
           .setDescription(`This journey will take ${response.data.journeys[0].duration.toString()} minutes.`)
           .setColor(0x000F9F)
