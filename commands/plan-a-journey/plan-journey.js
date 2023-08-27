@@ -10,20 +10,12 @@ module.exports = {
       .setDescription('Search for a journey using TfL Journey Planner')
       .addStringOption(option => option
         .setName('origin')
-        .setDescription('Starting point of the journey - must be a tube station')
-        .setRequired(true)
-        .setAutocomplete(true))
+        .setDescription('Starting point of the journey')
+        .setRequired(true))
       .addStringOption(option => option
         .setName('destination')
-        .setDescription('Destination of the journey - must be a tube station')
-        .setRequired(true)
-        .setAutocomplete(true)),
-
-    /* async autocomplete(interaction) {
-      const focusedOption = interaction.options.getFocused(true);
-      let choices = [];
-      const choicesSearch = string
-    }, */
+        .setDescription('Destination of the journey')
+        .setRequired(true)),
   
     async execute(interaction) {
       await interaction.deferReply()
