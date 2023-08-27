@@ -26,16 +26,16 @@ module.exports = {
 
                 const embed = new EmbedBuilder()
                     .setTitle(`${dockData.data.commonName}`)
-                    .setAuthor(
-                        {name: 'Cycle Dock Information', iconURL: 'https://media.tubee.dev/assets/images/image01.png'}
-                    )
+                    .setAuthor({
+                            name: 'Cycle Dock Information',
+                            iconURL: 'https://assets.app.londontransit.xyz/branding/roundels/pngimage/roundel-tfl.png'
+                        })
                     .setColor(0x000F9F)
                     .setTimestamp()
-                    .setFooter(
-                        {text: 'Powered by Transport for London'}
-                    )
-                    .addFields(
-                        {
+                    .setFooter({
+                            text: 'Powered by Transport for London'
+                        })
+                    .addFields({
                             name: 'Docked Bikes',
                             value: `${dockData.data.additionalProperties[6].value}`,
                             inline: true
@@ -58,7 +58,7 @@ module.exports = {
                             name: 'Longitude',
                             value: `${dockData.data.lon}`,
                             inline: true
-                        }    );
+                        });
 
             
 
