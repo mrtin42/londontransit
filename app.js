@@ -1,4 +1,4 @@
-require('dotenv').config(); //This will be used to store private keys
+require('dotenv').config(); // Load .env file for private data
 const path = require('path');
 const fs = require('fs');
 const deployCommands = require('./deploy/deployCommands');
@@ -20,7 +20,6 @@ for (const folder of commandFolders) {
 	for (const file of commandFiles) {
 		const filePath = path.join(commandsPath, file);
 		const command = require(filePath);
-		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
 			client.commands.set(command.data.name, command);
 		} else {
@@ -29,7 +28,7 @@ for (const folder of commandFolders) {
 	}
 }
 
-//Register our commands
+//Register commands
 deployCommands();
 
 
@@ -62,7 +61,3 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.login(BOT_TOKEN);
-
-// arrival.line_name,
-//`Destination: ${arrival.destination}\nEstimated Arrival: ${arrival.estimated_arrival}`,
-// false
