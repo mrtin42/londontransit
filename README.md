@@ -1,4 +1,4 @@
-<a href="https://londontransit.xyz">
+<a href="https://mbfrias.co.uk/londontransit">
     <img src="https://www.mbfrias.co.uk/londontransit/assets/images/botlogo.svg" alt="LOGO" title="LondonTransit" align="right" height="60"/>
 </a>
 
