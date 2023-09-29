@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--BROWSER-->
+        <meta charset="UTF-8">
+        <meta viewport="width=device-width, initial-scale=1.0">
+        <title>Commands // LondonTransit Documentation</title>
+        <link rel="icon" href="../../assets/images/favicon.png">
+        <!--STYLES + FONTS-->
+        <link rel="stylesheet" href="../../styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Assistant">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+        <link href="https://fonts.googleapis.com/css2?family=Kanit" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/3c4e7a03d3.js" crossorigin="anonymous"></script>
+        <!--SEO META-->
+        <meta name="description" content="TfL x Discord">
+        <meta name="keywords" content="TfL, Discord, London, Transport, LondonTransit">
+        <meta name="author" content="tub3.uk">
+        <meta name="theme-color" content="#1e1e1e">
+        <meta name="robots" content="index,follow">
+        <meta name="googlebot" content="index,follow">
+        <meta name="google" content="notranslate">
+        <meta name="revisit-after" content="1 days">
+        <meta name="rating" content="general">
+        <meta name="distribution" content="global">
+        <meta name="language" content="en">
+        <meta name="url" content="https://londontransit.xyz">
+        <meta name="identifier-URL" content="https://londontransit.xyz">
+        <meta name="coverage" content="Worldwide">
+        <meta name="og:title" content=" Bringing London's Essential transport network to your server. - LondonTransit">
+        <meta name="og:description" content="TfL x Discord">
+        <meta name="og:image" content="./assets/images/og.png">
+        <!--SCRIPTS-->
+        <script src="../../assets/scripts/scripts.js"></script>
+    </head>
+    <body>
+        <div class="sidenav" id="sidenav">
+            <div class="sidenav-content">
+                <ul id="docpages">
+                    <li><a class="docpage" href="../">Overview</a></li>
+                    <li><a class="docpage" href="./">Commands</a></li>
+                    <li><a class="docpage" href="../permissions">Permissions</a></li>
+                    <li><a class="docpage" href="../support">Support</a></li>
+                    <li><a class="docpage" href="../invite">Invite</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="docwrapper">
+            <nav class="docnavbar" id="doctopnav">
+                <div id="mobilehamburger">
+                    <a href="javascript:void(0);" onclick="openNav()"><i class="fa-solid fa-bars"></i></a>
+                </div>
+                <div id="docnavlogo">
+                    <a href="../"><img src="../../assets/images/botlogo.svg"></a>
+                </div>
+                <div id="docnavlinks">
+                    <a href="https://github.com/mbfrias/londontransit" target="_blank"><i class="fa-brands fa-git-alt"></i><span style="margin-left: 0.2rem;">repository</span></a>
+                </div>
+            </nav>
+            <div class="contentwrapper">
+                <div class="content">
+                    <h2>Commands</h2>
+                        <p>LondonTransit has a variety of commands to help you navigate London's transport network. You can find a list of commands below.</p>
+                        <div class="commandlist">
+                            <div class="command">
+                                <h3><code>/servicestatus</code></h3>
+                                <p>Displays the current status of the TfL network.</p>
+                            </div>
+                            <div class="command">
+                                <h3><code>/linestatus <span class="cmdparam">{line}</span></code></h3>
+                                <p>Displays the current status of a specific TfL line.</p>
+                            </div>
+                            <div class="command">
+                                <h3><code>/journey <span class="cmdparam">{origin}</span> <span class="cmdparam">{destination}</span></code></h3>
+                                <p>Displays the fastest route between two stations. Shows results inline with current service availability.</p>
+                            </div>
+                            <div class="command">
+                                <h3><code>/nextarrivals <span class="cmdparam">{station}</span></code></h3>
+                                <p>Displays the next arrivals at a specific station.<em>currently only supports the tube</em></p>
+                            </div>
+                            <div class="command">
+                                <h3><code>/locatebus <span class="cmdparam">{regplate}</span></code></h3>
+                                <p>Displays the current location of a specific bus.</p>
+                            </div>
+                            <div class="command">
+                                <h3><code>/cycledock <span class="cmdparam">{dock}</span></code></h3>
+                                <p>Displays the current availability of a specific cycle dock. <em>protip: the name is usually the road its on</em></p>
+                            </div>
+                            <div class="command">
+                                <h3><code>/info</code></h3>
+                                <p>Displays information about the bot.</p>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>      
