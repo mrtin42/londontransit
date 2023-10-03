@@ -15,10 +15,24 @@ body {
     font-size: 16px;
     line-height: 1.5;
     color: #fff;
-    background-color: #f2f2f2;
+    background-color: #000000;
     text-align: center;
     align-items: center;
+    width:100vw;
 }
+
+hr {
+    margin-right: 2rem;
+}
+
+@media screen {
+    hr {
+        margin-inline: 1rem;
+
+    }
+}
+
+
 
 .navbar {
     /* transparent background. solidifies on scroll */
@@ -311,4 +325,283 @@ body {
 
 .copyright a:hover {
     text-decoration: none;
+}
+
+.sidenav {
+    background-color: #3f3f3f;
+    color: #f2f2f2;
+    /* documentation nav sidebar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width:14%;
+
+}
+
+#docpages {
+    padding-left: 1rem;
+}
+
+.sidenav-content {
+    display: block;
+}
+
+.sidenav-content ul {
+    list-style-type: none;
+}
+
+.sidenav-content li {
+    padding-inline: 0%;
+    font-size: 1.5rem;
+    font-family: 'Kanit';
+    text-decoration: none;
+    color: #f2f2f2;
+    transition: all .3s ease-in-out;
+}
+
+.sidenav-content a {
+    padding-inline: 0%;
+    font-family: 'Kanit';
+    text-decoration: none;
+    color: #f2f2f2;
+    transition: all .3s ease-in-out;
+}
+
+.sidenav-content a:hover {
+    background-color: #dddddddd;
+    color: black;
+    border-radius: 0.8rem;
+}
+
+.docwrapper {
+    margin-left: 14%;
+    width: 86%;
+    margin-top: 8rem;
+    text-align: left;
+}
+
+.docnavbar {
+    background-color: #0a1047;
+    position: fixed;
+    top: 0;
+    display: flex;
+    width: 86%;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 9999;
+
+}
+
+.docnavbar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.docnavbar img {
+    width: 30rem;
+    margin: 0;
+    padding: 0;
+}
+
+#docnavlinks {
+    display: flex;
+    align-items: center;
+}
+
+#docnavlinks a {
+    margin-right: 2rem;
+    /* verticaly center tect */
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+    font-family: 'Kanit';
+    border-radius: 1rem;
+    transition: all .3s ease-in-out;
+}
+
+#docnavlinks a:hover {
+    background-color: #dddddddd;
+    color: black;
+    border-radius: 4rem;
+}
+
+#mobilehamburger {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    #mobilehamburger {
+        display: block;
+    }
+
+    .docwrapper {
+        margin-top: 5rem;
+        margin-left: 0%;
+        width: 100%;
+        text-align: center;
+    }
+
+    .docnavbar {
+        width: 100%;
+    }
+    .sidenav {
+        display: none;
+        width: 10rem;
+        text-align: left;
+    }
+
+    .active {
+        display: block;
+    }
+
+    .docnavbar a {
+        display: none;
+    }
+    .docnavbar img {
+        display: none;
+    }
+    .docnavbar {
+        background-color: #0a1047;
+        position: fixed;
+        top: 0;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 1rem;
+        z-index: 9999;
+    }
+    .docnavbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 13px;
+    }
+    .docnavbar img {
+        width: 30rem;
+        margin: 0;
+        padding: 0;
+    }
+    #docnavlinks {
+        display: flex;
+        align-items: center;
+    }
+    #docnavlinks a {
+        padding: 0.25rem;
+        margin-right: 2rem;
+        /* verticaly center tect */
+        display: flex;
+        align-items: center;
+        font-size: 2rem;
+        font-family: 'Kanit';
+        border-radius: 1rem;
+        transition: all .3s ease-in-out;
+    }
+    #docnavlinks a:hover {
+        background-color: #dddddddd;
+        color: black;
+        border-radius: 1rem;
+    }
+
+    .sidenav-content {
+        margin-top: 5rem;
+    }
+}
+
+.contentwrapper {
+    padding-left: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+    .contentwrapper {
+        padding-left: 0rem;
+    }
+}
+
+header img {
+    margin: 0;
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header img {
+        display: block;
+        width: 95%;
+    }
+}
+
+header h1 {
+    margin: 0;
+}
+
+#summary p {
+    padding-inline: 0.75rem;
+}
+
+code {
+    background-color: #3f3f3f;
+    padding: 0.25%;
+    border-radius: 0.5rem;
+}
+
+span.cmdparam {
+    color: #a5a5a5;
+    padding: 0.15em;
+    background-color: #00000086;
+    border-radius: 0.5em;
+}
+
+@media screen and (max-width: 768px) {
+    code {
+        background-color: #3f3f3f;
+        padding: 1%;
+        border-radius: 0.5rem;
+    }
+    
+    span.cmdparam {
+        color: #a5a5a5;
+        padding: 0.2em;
+        background-color: #00000086;
+        border-radius: 0.5em;
+    }
+}
+#abilities ul {
+    list-style-type: none;
+    padding: 0;
+    padding-inline: 0.75rem;
+}
+
+#nerd a {
+    color: #ffffff;
+}
+
+#nerd a:hover {
+    text-decoration: none;
+}
+
+#fund a:hover {
+    width: 13rem;
+}
+
+#fundbuttons {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    background-color: #0a1047;
+    color: #f2f2f2;
 }

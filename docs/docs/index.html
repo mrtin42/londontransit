@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--BROWSER-->
+        <meta charset="UTF-8">
+        <meta viewport="width=device-width, initial-scale=1.0">
+        <title>Documentation // LondonTransit</title>
+        <link rel="icon" href="https://londontransit.xyz/assets/images/favicon.png">
+        <!--STYLES + FONTS-->
+        <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Assistant">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+        <link href="https://fonts.googleapis.com/css2?family=Kanit" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/3c4e7a03d3.js" crossorigin="anonymous"></script>
+        <!--SEO META-->
+        <meta name="description" content="TfL x Discord">
+        <meta name="keywords" content="TfL, Discord, London, Transport, LondonTransit">
+        <meta name="author" content="tub3.uk">
+        <meta name="theme-color" content="#1e1e1e">
+        <meta name="robots" content="index,follow">
+        <meta name="googlebot" content="index,follow">
+        <meta name="google" content="notranslate">
+        <meta name="revisit-after" content="1 days">
+        <meta name="rating" content="general">
+        <meta name="distribution" content="global">
+        <meta name="language" content="en">
+        <meta name="url" content="https://londontransit.xyz">
+        <meta name="identifier-URL" content="https://londontransit.xyz">
+        <meta name="coverage" content="Worldwide">
+        <meta name="og:title" content=" Bringing London's Essential transport network to your server. - LondonTransit">
+        <meta name="og:description" content="TfL x Discord">
+        <meta name="og:image" content="./assets/images/og.png">
+        <!--SCRIPTS-->
+        <script src="../assets/scripts/scripts.js"></script>
+    </head>
+    <body>
+        <div class="sidenav" id="sidenav">
+            <div class="sidenav-content">
+                <ul id="docpages">
+                    <li><a class="docpage" href="./">Overview</a></li>
+                    <li><a class="docpage" href="./commands">Commands</a></li>
+                    <li><a class="docpage" href="./permissions">Permissions</a></li>
+                    <li><a class="docpage" href="./support">Support</a></li>
+                    <li><a class="docpage" href="./invite">Invite</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="docwrapper">
+            <nav class="docnavbar" id="doctopnav">
+                <div id="mobilehamburger">
+                    <a href="javascript:void(0);" onclick="openNav()"><i class="fa-solid fa-bars"></i></a>
+                </div>
+				<div id="docnavlogo">
+					<a href="../"><img src="../assets/images/botlogo.svg"></a>
+				</div>
+                <div id="docnavlinks">
+                    <a href="https://github.com/mbfrias/londontransit" target="_blank"><i class="fa-brands fa-git-alt"></i><span style="margin-left: 0.2rem;">repository</span></a>
+                </div>
+			</nav>
+            <div class="contentwrapper">
+                <header>
+                    <img alt="LondonTransit" src="../assets/images/botlogo.svg">
+                    <h1>Documentation</h1>
+                </header>
+                <hr>
+                <div id="summary">
+                    <h2>Welcome to LondonTransit</h2>
+                    <p>LondonTransit is a Discord bot that brings London's essential transport network to your server. With support for the entire tube network as well as DLR, Overground, the Elizabeth line and support for buses coming soon, You can navigate London in the comfort of your community, or tiny friend group.</p>
+                </div>
+                <hr>
+                <div id="abilities">
+                    <h2>Supported Services</h2>
+                    <ul>
+                        <li>
+                            <h3>Tube</h3>
+                            <p>LondonTransit supports the entire London Underground network, with service status and journey planning.</p>
+                        </li>
+                        <li>
+                            <h3>Light rail</h3>
+                            <p>LondonTransit supports the DLR and Croydon Tramlink with service status and journey planning.</p>
+                        </li>
+                        <li>
+                            <h3>Heavy rail</h3>
+                            <p>LondonTransit supports the London Overground and Elizabeth line with service status and journey planning.</p>
+                        </li>
+                        <li>
+                            <h3>Cycle hire</h3>
+                            <p>LondonTransit supports the Santander Cycles cycle hire scheme with live availability information for docking stations.</p>
+                        </li>
+                        <li>
+                            <h3>Buses</h3>
+                            <p>Support for the bus network is coming soon.</p>
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+                <div id="nerd">
+                    <h2>Technical Information for nerds</h2>
+                    <h3>Languages</h3>
+                    <p>LondonTransit is written in JavaScript, using the <a href="node.js.org" target="_blank">node.js</a> runtime framework.</p>
+                    <h3>Acknowledgements</h3>
+                    <p>LondonTransit uses the <a href="https://tfl.gov.uk/info-for/open-data-users/" target="_blank">TfL Open Data API</a> to provide the majority (currently all) of the service information provided.</p>
+                    <p>LondonTransit uses the <a href="https://axios-http.com" target="_blank">axios</a>node.js library for API requests and the <a href="https://discord.js.org" target="_blank">discord.js</a> library for the Discord API.</p>
+                </div>
+                <hr>
+                <div id="fund">
+                    <h2>Support LondonTransit</h2>
+                    <p>LondonTransit is a free service, and will always be free. But I would love it if you tossed me a quid or two to not only fund hosting, domains and other costs, but also to feed my family. I'm a student, and the Tories couldn't run an economy even if their lives depended on it. If you want to help me out, you can do so by clicking the button(s) below.</p>
+                    <div id="fund">
+                        <a href="https://www.buymeacoffee.com/tub3" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 3rem !important; width: 12rem !important;"></a>
+                        <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+                        <stripe-buy-button buy-button-id="buy_btn_1NuhgfKBL8QeSJ2m4HtcxIqN" publishable-key="pk_live_51NuhHkKBL8QeSJ2mrLyhsySQ0lgLr4h3lKS72SfAnC4l2YGbv3iG1GRrGnlwaGPurRWxkQL4lHzYSQqnfq0qONji00MhWIZuQg"></stripe-buy-button>
+                </div>
+        </div>
