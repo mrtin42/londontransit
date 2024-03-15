@@ -51,13 +51,13 @@ module.exports = {
       }
 
       try {
-        await interaction.reply({
+        await interaction.editReply({
           content: ` `,
           embeds: [embed]
         });
       } catch (error) {
          console.error(error);
-         await interaction.reply('An error occurred while fetching arrivals.');
+         await interaction.editReply('An error occurred while fetching arrivals.');
       }
        
         

@@ -19,11 +19,17 @@ module.exports = {
         .setRequired(true)
         .setAutocomplete(true)),
 
-    /* async autocomplete(interaction) {
-      const focusedOption = interaction.options.getFocused(true);
+    async autocomplete(interaction) {
+      const focusedOption = interaction.options.getFocused(false);
       let choices = [];
-      const choicesSearch = string
-    }, */
+      const choicesRes = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${focusedOption}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`)
+      for (const i of choicesRes.data.matches) {
+        choices.push(i.name)
+      }
+      interaction.respond(
+        choices.map(choice => ({name: choice, value: choice}))
+      )
+    },
   
     async execute(interaction) {
       await interaction.deferReply()

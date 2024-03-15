@@ -20,10 +20,10 @@ module.exports = {
 			const busData = response.data[0]
 
 			if (busData.timeToStation < 60) {
-				var DeclareArrival = `It should arrive in **less than a minute**`
+				var approxArrival = `**less than a minute**`
 			} else {
 				var ArrivalTime = Math.floor(busData.timeToStation / 60)
-				var DeclareArrival = `It should arrive in approximately **${ArrivalTime} minute(s)**`
+				var approxArrival = `approximately **${ArrivalTime} minute(s)**`
 			}
 
 			const embed = new EmbedBuilder()
@@ -32,7 +32,7 @@ module.exports = {
 				)
 				.setColor(0xE1251B)
 				.setTitle(`${busData.vehicleId} is currently operating the ${busData.lineName} to ${busData.destinationName}`)
-				.setDescription(`The next stop will be **${busData.stationName}**\n${DeclareArrival}`);
+				.setDescription(`The next stop will be **${busData.stationName}**\nIt should arrive in ${approxArrival}`);
 
 			await interaction.editReply({embeds: [embed]})
 		}
