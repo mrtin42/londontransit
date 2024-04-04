@@ -9,6 +9,7 @@ module.exports = {
 		.addStringOption(option => option.setName('line').setDescription('the line youre checking the status of - TEMP: does not work with H&C or W&C lines').setRequired(true)),
 
 	async execute(interaction) {
+        await interaction.deferReply();
 
         const requestedLine = await axios.get(`https://api.tfl.gov.uk/Line/Search/${interaction.options.getString('line')}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,dlr,tram,elizabeth-line,overground`);
 
