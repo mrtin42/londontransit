@@ -28,7 +28,7 @@ module.exports = {
 
 			const embed = new EmbedBuilder()
 				.setAuthor(
-					{ name: 'Vehicle Search', iconURL: `https://assets.app.londontransit.xyz/branding/tfl/roundels/pngimage/roundel-bus.png` }
+					{ name: 'Vehicle Search', iconURL: `https://bird-with-down-syndrome.londontransit.org.uk/tfl/brand/bus-roundel.png` }
 				)
 				.setColor(0xE1251B)
 				.setTitle(`${busData.vehicleId} is currently operating the ${busData.lineName} to ${busData.destinationName}`)

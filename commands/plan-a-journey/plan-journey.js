@@ -20,13 +20,22 @@ module.exports = {
         .setAutocomplete(true)),
 
     async autocomplete(interaction) {
+      console.log(chalk.yellow('Autocomplete called'));
       const focusedOption = interaction.options.getFocused(false);
       let choices = [];
-      const choicesRes = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${focusedOption}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`)
+      console.log(chalk.yellow('making request'));
+      const choicesRes = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${focusedOption}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
+      if (!res.success) {
+        console.log(chalk.red('Autocomplete failed'));
+        await interaction.respond([{ name: 'No results found: Technical Error', value: 'AUTOCOMPLETE_ERROR:internal_error'}]);
+        return;
+      }
       for (const i of choicesRes.data.matches) {
+        console.log(chalk.yellow(`Adding ${i.name} to choices`));
         choices.push(i.name)
       }
-      interaction.respond(
+      console.log(chalk.green('Autocomplete succeeded'));
+      await interaction.respond(
         choices.map(choice => ({name: choice, value: choice}))
       )
     },
@@ -36,14 +45,20 @@ module.exports = {
       const origin = interaction.options.getString('origin');
       const destination = interaction.options.getString('destination');
 
+      if (origin == 'AUTOCOMPLETE_ERROR:internal_error' || destination == 'AUTOCOMPLETE_ERROR:internal_error') {
+        await interaction.editReply('Your input failed due to an internal error when producing autocomplete results. Please try again.');
+      }
+
     
       const originNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${origin}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
       const destinNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${destination}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
 
       if (!originNaptan.data.matches[0]) {
         await interaction.editReply('Origin station was not found')
+        return;
       } else if (!destinNaptan.data.matches[0]) {
         await interaction.editReply('Destination station was not found')
+        return;
       } else {
         const response = await axios.get(`https://api.tfl.gov.uk/Journey/JourneyResults/${originNaptan.data.matches[0].id}/to/${destinNaptan.data.matches[0].id}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&mode=tube,bus,national-rail,walking,dlr`);
 
@@ -51,7 +66,7 @@ module.exports = {
         const embed = new EmbedBuilder()
           .setTitle(`${origin} to ${destination}`)
           .setAuthor(
-            { name: 'Journey Planner', iconURL: 'https://assets.app.londontransit.xyz/branding/tfl/roundels/pngimage/roundel-tube.png'}
+            { name: 'Journey Planner', iconURL: 'https://bird-with-down-syndrome.londontransit.org.uk/tfl/brand/lul-roundel.png'}
           )
           .setDescription(`This journey will take ${response.data.journeys[0].duration.toString()} minutes.`)
           .setColor(0x000F9F)

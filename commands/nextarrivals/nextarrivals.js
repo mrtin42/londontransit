@@ -30,7 +30,7 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle(`${stationName}`)
         .setAuthor(
-          { name: 'Station Arrivals', iconURL: 'https://assets.app.londontransit.xyz/branding/tfl/roundels/pngimage/roundel-tube.png'}
+          { name: 'Station Arrivals', iconURL: 'https://bird-with-down-syndrome.londontransit.org.uk/tfl/brand/lul-roundel.pngWA'}
         )
         .setColor(0x000F9F)
         .setTimestamp()

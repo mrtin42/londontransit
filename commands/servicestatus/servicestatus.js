@@ -6,15 +6,14 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('servicestatus')
 		.setDescription('fetches the current disruption status of london transport services'),
-	async execute(interaction) {
-        
+	async execute(interaction) {   
         await interaction.deferReply();
 
         const response = await axios.get('https://api.tfl.gov.uk/Line/Mode/tube,dlr,tram,elizabeth-line,overground/Status?app_key=32165e2dbd9e4da9a804f88d7495d9d3');
 
         const embed = new EmbedBuilder()
           .setAuthor(
-            { name: 'TfL Services Status', iconURL: 'https://assets.app.londontransit.xyz/branding/tfl/roundels/pngimage/roundel-tube.png' }
+            { name: 'TfL Services Status', iconURL: 'https://bird-with-down-syndrome.londontransit.org.uk/tfl/brand/lul-roundel.png' }
           )
           .setColor(0x000F9F)
           .setTimestamp()

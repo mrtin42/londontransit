@@ -18,7 +18,7 @@ module.exports = {
         const embed = new EmbedBuilder()
         .setTitle(`${response.data[0].name} `)
         .setAuthor(
-          { name: 'Line Status', iconURL: 'https://assets.app.londontransit.xyz/branding/tfl/roundels/pngimage/roundel-tube.png'}
+          { name: 'Line Status', iconURL: 'https://bird-with-down-syndrome.londontransit.org.uk/tfl/brand/lul-roundel.png'}
         )
         .setColor(0x000F9F)
         .setTimestamp()
@@ -42,7 +42,7 @@ module.exports = {
         }
 
 
-        await interaction.reply({
+        await interaction.editReply({
           embeds: [embed]
         });
   }
