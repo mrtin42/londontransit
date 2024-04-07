@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const deployCommands = require('./deploy/deployCommands');
 const { Client, ActivityType, Collection, Events, GatewayIntentBits, REST, Routes } = require('discord.js');
+const http = require('http');
 
 const BOT_TOKEN = process.env.CLIENT_TOKEN;
 
@@ -35,11 +36,21 @@ deployCommands();
 
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
+	client.user.setActivity('the api', { type: ActivityType.Listening });
+	const uptimeMonitor = http.createServer((req, res) => {
+		res.appendHeader('Content-Type', 'application/json');
+		res.writeHead(200);
+		res.end(JSON.stringify({ status: 'ok' }));
+	} /* betterstack will monitor this endpoint - if it doesnt respond, the server is down and i'll get an alert */);
+	uptimeMonitor.listen(1863); // neat reference to the year the London Underground began operation
+	console.log('Uptime monitor started');
+	// log when uptime monitor endpoint is hit
+	uptimeMonitor.on('request', (req, res) => {
+		console.log(`Uptime monitor request received from ${req.socket.remoteAddress}`);
+	});
 });
 
-client.on("ready", () => {
-	client.user.setActivity('the api', { type: ActivityType.Listening });
-});
+
 
 
 client.on(Events.InteractionCreate, async interaction => {
@@ -56,7 +67,15 @@ client.on(Events.InteractionCreate, async interaction => {
 		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
-			await interaction.editReply({ content: 'There was an error while executing this command!'});
+			try {
+				await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+			} catch (err) {
+				// if reply failed due to deffered response, try editting the deffered response
+				try { await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true }); } catch (e) {
+					console.error(e);
+					// if all else fails, log the error
+				}
+			}
 		
 	}
 });
