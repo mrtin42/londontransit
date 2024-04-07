@@ -46,7 +46,9 @@ client.once(Events.ClientReady, c => {
 	console.log('Uptime monitor started');
 	// log when uptime monitor endpoint is hit
 	uptimeMonitor.on('request', (req, res) => {
-		console.log(`Uptime monitor request received from ${req.socket.remoteAddress}`);
+		console.log(`Uptime monitor request received from ${
+			req.socket.remoteAddress === '::1' || req.socket.remoteAddress === '::ffff:127.0.0.1' || req.socket.remoteAddress === '127.0.0.1' ? req.headers['x-forwarded-for'] : req.socket.remoteAddress
+		}`);
 	});
 });
 
