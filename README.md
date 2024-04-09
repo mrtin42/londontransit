@@ -8,7 +8,7 @@
 
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![codebeat badge](https://codebeat.co/badges/4db1b9fd-e976-4203-93be-671952d6f00f)](https://codebeat.co/projects/github-com-t-ub3-londontransit-main)
-[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/14mic.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/14mic.svg)](https://status.martindev.xyz)
 
 LondonTransit is a discord bot that provides realtime public transport information for London, including the London Underground and the London Bus network, using the [Transport For London Unified API](https://api-portal.tfl.gov.uk/).
 
