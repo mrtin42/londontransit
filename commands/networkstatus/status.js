@@ -1,6 +1,5 @@
 const axios = require('axios');
 const { EmbedBuilder } = require('discord.js');
-const { options } = require('pg/lib/defaults');
 
 module.exports = {
     data: {
