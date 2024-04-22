@@ -3,38 +3,71 @@ const { EmbedBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { default: axios } = require('axios');
+const chalk = import('chalk');
 
 module.exports = {
-    data: new SlashCommandBuilder()
-      .setName('journey')
-      .setDescription('Search for a journey using TfL Journey Planner')
-      .addStringOption(option => option
-        .setName('origin')
-        .setDescription('Starting point of the journey - must be a tube station')
-        .setRequired(true)
-        .setAutocomplete(true))
-      .addStringOption(option => option
-        .setName('destination')
-        .setDescription('Destination of the journey - must be a tube station')
-        .setRequired(true)
-        .setAutocomplete(true)),
-
+    // data: new SlashCommandBuilder().
+    //   .setName('journey')
+    //   .setDescription('Search for a journey using TfL Journey Planner')
+    //   .addStringOption(option => option
+    //     .setName('origin')
+    //     .setDescription('Starting point of the journey - must be a tube station')
+    //     .setRequired(true)
+    //     .setAutocomplete(true))
+    //   .addStringOption(option => option
+    //     .setName('destination')
+    //     .setDescription('Destination of the journey - must be a tube station')
+    //     .setRequired(true)
+    //     .setAutocomplete(true)),
+    data: {
+      name: 'journey',
+      description: 'Search for a journey using TfL Journey Planner',
+      "integration_types": [0,1],
+      "contexts": [0,1,2],
+      options: [
+        {
+          name: 'origin',
+          description: 'Starting point of the journey - reccomended be a tube station',
+          type: 3,
+          required: true,
+          autocomplete: true
+        },
+        {
+          name: 'destination',
+          description: 'Destination of the journey - reccomended be a tube station',
+          type: 3,
+          required: true,
+          autocomplete: true
+        }
+      ]
+    },
     async autocomplete(interaction) {
-      console.log(chalk.yellow('Autocomplete called'));
+      console.log('Autocomplete called');
       const focusedOption = interaction.options.getFocused(false);
+      console.log(`Focused option: ${focusedOption}`);
+      if (focusedOption == '') {
+        console.log('No value entered');
+        await interaction.respond([{ name: 'Enter a station name', value: 'AUTOCOMPLETE_ERROR:no_input'}]);
+        return;
+      }
       let choices = [];
-      console.log(chalk.yellow('making request'));
-      const choicesRes = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${focusedOption}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
-      if (!res.success) {
-        console.log(chalk.red('Autocomplete failed'));
+      console.log('making request');
+      const res = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${focusedOption}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
+      console.log(`request made, response code: ${res.status}`);
+      if (res.status != 200) {
+        console.log('Autocomplete failed');
         await interaction.respond([{ name: 'No results found: Technical Error', value: 'AUTOCOMPLETE_ERROR:internal_error'}]);
         return;
       }
-      for (const i of choicesRes.data.matches) {
-        console.log(chalk.yellow(`Adding ${i.name} to choices`));
+      for (const i of res.data.matches) {
+        console.log(`Adding ${i.name} to choices`);
         choices.push(i.name)
+        if (choices.length >= 25) {
+          console.log('25 choices reached: breaking');
+          break;
+        }
       }
-      console.log(chalk.green('Autocomplete succeeded'));
+      console.log('Autocomplete succeeded');
       await interaction.respond(
         choices.map(choice => ({name: choice, value: choice}))
       )
@@ -47,8 +80,12 @@ module.exports = {
 
       if (origin == 'AUTOCOMPLETE_ERROR:internal_error' || destination == 'AUTOCOMPLETE_ERROR:internal_error') {
         await interaction.editReply('Your input failed due to an internal error when producing autocomplete results. Please try again.');
+        return;
       }
-
+      if (origin == 'AUTOCOMPLETE_ERROR:no_input' || destination == 'AUTOCOMPLETE_ERROR:no_input') {
+        await interaction.editReply('You must enter a station name to search for a journey.');
+        return;
+      }
     
       const originNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${origin}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
       const destinNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${destination}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);

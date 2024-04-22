@@ -3,10 +3,24 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('locatebus')
-		.setDescription('get the current state of a bus from its registration plate')
-        .addStringOption(option => option.setName('registration').setDescription("the registration plate (no spaces e.g LX09AYN or LTZ1748").setRequired(true)),
+	// data: new SlashCommandBuilder()
+	// 	.setName('locatebus')
+	// 	.setDescription('get the current state of a bus from its registration plate')
+    //     .addStringOption(option => option.setName('registration').setDescription("the registration plate (no spaces e.g LX09AYN or LTZ1748").setRequired(true)),
+	data: {
+		name: 'locatebus',
+		description: 'get the current state of a bus from its registration plate',
+		options: [
+			{
+				name: 'registration',
+				description: 'the registration plate (no spaces e.g LX09AYN or LTZ1748',
+				type: 3,
+				required: true
+			}
+		],
+		"integration_types": [0,1],
+		"contexts": [0,1,2]
+	},
 	async execute(interaction) {
         const regPlate = interaction.options.getString('registration');
 

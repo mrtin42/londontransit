@@ -1,16 +1,31 @@
 const { EmbedBuilder, SlashCommandBuilder, ButtonBuilder} = require('discord.js');
 const axios = require('axios');
+const noti = require('../../utils/newsystemembed.js');
 
 module.exports = {
-    data: new SlashCommandBuilder()
-    .setName('nextarrivals')
-    .setDescription('Get the next arrivals from a Tube station')
-    .addStringOption((option) =>
-      option
-        .setName('station')
-        .setDescription('The name of the Tube station')
-        .setRequired(true)
-    ),
+    // data: new SlashCommandBuilder()
+    // .setName('nextarrivals')
+    // .setDescription('Get the next arrivals from a Tube station')
+    // .addStringOption((option) =>
+    //   option
+    //     .setName('station')
+    //     .setDescription('The name of the Tube station')
+    //     .setRequired(true)
+    // ),
+    data: {
+      name: 'nextarrivals',
+      description: 'Get the next arrivals from a Tube station',
+      "integration_types": [0,1],
+      "contexts": [0,1,2],
+      options: [
+        {
+          name: 'station',
+          description: 'The name of the Tube station',
+          type: 3,
+          required: true
+        }
+      ]
+    },
 
     async execute(interaction) {
       await interaction.deferReply();
@@ -30,7 +45,7 @@ module.exports = {
       const embed = new EmbedBuilder()
         .setTitle(`${stationName}`)
         .setAuthor(
-          { name: 'Station Arrivals', iconURL: 'https://bird-with-down-syndrome.londontransit.org.uk/tfl/brand/lul-roundel.pngWA'}
+          { name: 'Station Arrivals', iconURL: 'https://bird-with-down-syndrome.londontransit.org.uk/tfl/brand/lul-roundel.png'}
         )
         .setColor(0x000F9F)
         .setTimestamp()
@@ -53,7 +68,7 @@ module.exports = {
       try {
         await interaction.editReply({
           content: ` `,
-          embeds: [embed]
+          embeds: [embed, noti]
         });
       } catch (error) {
          console.error(error);

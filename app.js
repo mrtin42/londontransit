@@ -47,7 +47,7 @@ client.once(Events.ClientReady, c => {
 	// log when uptime monitor endpoint is hit
 	uptimeMonitor.on('request', (req, res) => {
 		const d = new Date();
-		console.log(`Uptime monitor request received from ${req.connection.remoteAddress} on ${d.toDateString()} at ${d.toLocaleTimeString()}${req.headers['x-forwarded-for'] ? ` (forwarded by a proxy server by actual client at ${req.headers['x-forwarded-for']})` : ''}`);
+		console.log(`Uptime monitor request received from ${req.headers['X-Forwarded-For'] ? `IP ${req.headers['X-Forwarded-For']} (via proxy)` : `IP ${req.socket.remoteAddress}`} at ${d.toISOString()}`);
 	});
 });
 
@@ -55,7 +55,7 @@ client.once(Events.ClientReady, c => {
 
 
 client.on(Events.InteractionCreate, async interaction => {
-    if (!interaction.isChatInputCommand()) return;
+    if (!interaction.isChatInputCommand() && !interaction.isAutocomplete()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
 
@@ -65,19 +65,16 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 
 	try {
-		await command.execute(interaction);
+		if (interaction.isChatInputCommand()) {
+			await command.execute(interaction);
+		} else if (interaction.isAutocomplete()) { 
+			await command.autocomplete(interaction);
+		} else {
+			console.error('An interaction was received that was not a command or autocomplete.');
+		}
 	} catch (error) {
 		console.error(error);
-			try {
-				await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-			} catch (err) {
-				// if reply failed due to deffered response, try editting the deffered response
-				try { await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true }); } catch (e) {
-					console.error(e);
-					// if all else fails, log the error
-				}
-			}
-		
+		if (interaction.isChatInputCommand()) await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 

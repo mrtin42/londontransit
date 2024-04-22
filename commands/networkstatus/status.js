@@ -1,14 +1,23 @@
 const axios = require('axios');
-const { SlashCommandBuilder, EmbedBuilder} = require('discord.js');
-
+const { EmbedBuilder } = require('discord.js');
+const { options } = require('pg/lib/defaults');
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('linestatus')
-		.setDescription('fetches the current disruption status of a tube line of your choice')
-		.addStringOption(option => option.setName('line').setDescription('the line youre checking the status of - TEMP: does not work with H&C or W&C lines').setRequired(true)),
-
-	async execute(interaction) {
+    data: {
+        name: 'linestatus',
+        description: 'check the status of a specific tube line',
+        options: [
+            {
+                name: 'line',
+                description: 'the line youre checking the status of',
+                type: 3,
+                required: true
+            }
+        ],
+        "integration_types": [0,1],
+        "contexts": [0,1,2]
+    },
+    async execute(interaction) {
         await interaction.deferReply();
 
         const requestedLine = await axios.get(`https://api.tfl.gov.uk/Line/Search/${interaction.options.getString('line')}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,dlr,tram,elizabeth-line,overground`);
@@ -45,5 +54,5 @@ module.exports = {
         await interaction.editReply({
           embeds: [embed]
         });
-  }
-};
+    }
+}
