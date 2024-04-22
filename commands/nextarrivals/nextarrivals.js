@@ -61,7 +61,7 @@ module.exports = {
         extraSeconds = extraSeconds < 10 ? "0" + extraSeconds : extraSeconds;
 
         embed.addFields(
-          { name: `${arrival.lineName}`, value: `Destination: ${arrival.towards}\nEstimated Arrival in: ${minutes} mins`}
+          { name: `${arrival.lineName}`, value: `Destination: ${arrival.towards}\nEstimated Arrival: ${`${minutes}` === '00' ? "Due now" : `${minutes} min(s)`}` }
         );
       }
 
