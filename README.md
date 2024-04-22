@@ -4,7 +4,7 @@
 
 # LondonTransit
 
-> **LondonTransit's application structure is currently being migrated from a bot user to a globally available user application. This will allow for more features and a better user experience. during this migration, commands may not work as expected, and you will have to reauthorize the application on your account.**
+> **LondonTransit's application structure is currently being migrated from a bot user to both that and a globally available user application. This will allow for more features and a better user experience. during this migration, commands may not work as expected, and you will have to reauthorize the application on your account in order to use it anywhere.**
 
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![codebeat badge](https://codebeat.co/badges/4db1b9fd-e976-4203-93be-671952d6f00f)](https://codebeat.co/projects/github-com-t-ub3-londontransit-main)
