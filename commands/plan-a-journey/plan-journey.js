@@ -4,7 +4,7 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { default: axios } = require('axios');
 const chalk = import('chalk');
-const autocomplete = require('@/utils/autocomplete/station.js');
+const autocomplete = require('../../utils/autocomplete/station.js');
 
 module.exports = {
     // data: new SlashCommandBuilder().
@@ -43,7 +43,7 @@ module.exports = {
       ]
     },
     async autocomplete(interaction) {
-      const choices = await autocomplete(interaction);
+      const choices = await autocomplete(interaction, 'bus,cable-car,dlr,elizabeth-line,interchange-keep-sitting,interchange-secure,national-rail,overground,river-bus,tram,tube,walking');
       await interaction.respond(
         choices.map(choice => ({name: choice, value: choice}))
       )

@@ -1,7 +1,7 @@
 require('dotenv').config(); //This will be used to store private keys
 const path = require('path');
 const fs = require('fs');
-const deployCommands = require('@/deploy/deployCommands.js');
+const deployCommands = require('./deploy/deployCommands.js');
 const { Client, ActivityType, Collection, Events, GatewayIntentBits, REST, Routes } = require('discord.js');
 const http = require('http');
 

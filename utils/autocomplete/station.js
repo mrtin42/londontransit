@@ -1,4 +1,6 @@
-module.exports = async (interaction) => {
+const axios = require('axios');
+
+module.exports = async (interaction, scope) => {
     console.log('Autocomplete called');
     const focusedOption = interaction.options.getFocused(false);
     console.log(`Focused option: ${focusedOption}`);
@@ -9,7 +11,7 @@ module.exports = async (interaction) => {
     }
     let choices = [];
     console.log('making request');
-    const res = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${focusedOption}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
+    const res = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${focusedOption}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=${scope}&includeHubs=false`);
     console.log(`request made, response code: ${res.status}`);
     if (res.status != 200) {
       console.log('Autocomplete failed');
