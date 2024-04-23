@@ -1,6 +1,7 @@
 const { EmbedBuilder, SlashCommandBuilder, ButtonBuilder} = require('discord.js');
 const axios = require('axios');
-const noti = require('../../utils/newsystemembed.js');
+const noti = require('@/utils/newsystemembed.js');
+const autocomplete = require('@/utils/autocomplete/station.js');
 
 module.exports = {
     // data: new SlashCommandBuilder()
@@ -25,6 +26,13 @@ module.exports = {
           required: true
         }
       ]
+    },
+
+    async autocomplete(interaction) {
+      const choices = await autocomplete(interaction);
+      await interaction.respond(
+        choices.map(choice => ({name: choice, value: choice}))
+      )
     },
 
     async execute(interaction) {

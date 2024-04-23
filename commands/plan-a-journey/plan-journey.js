@@ -4,6 +4,7 @@ const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 const { default: axios } = require('axios');
 const chalk = import('chalk');
+const autocomplete = require('@/utils/autocomplete/station.js');
 
 module.exports = {
     // data: new SlashCommandBuilder().
@@ -42,32 +43,7 @@ module.exports = {
       ]
     },
     async autocomplete(interaction) {
-      console.log('Autocomplete called');
-      const focusedOption = interaction.options.getFocused(false);
-      console.log(`Focused option: ${focusedOption}`);
-      if (focusedOption == '') {
-        console.log('No value entered');
-        await interaction.respond([{ name: 'Enter a station name', value: 'AUTOCOMPLETE_ERROR:no_input'}]);
-        return;
-      }
-      let choices = [];
-      console.log('making request');
-      const res = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${focusedOption}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
-      console.log(`request made, response code: ${res.status}`);
-      if (res.status != 200) {
-        console.log('Autocomplete failed');
-        await interaction.respond([{ name: 'No results found: Technical Error', value: 'AUTOCOMPLETE_ERROR:internal_error'}]);
-        return;
-      }
-      for (const i of res.data.matches) {
-        console.log(`Adding ${i.name} to choices`);
-        choices.push(i.name)
-        if (choices.length >= 25) {
-          console.log('25 choices reached: breaking');
-          break;
-        }
-      }
-      console.log('Autocomplete succeeded');
+      const choices = await autocomplete(interaction);
       await interaction.respond(
         choices.map(choice => ({name: choice, value: choice}))
       )
