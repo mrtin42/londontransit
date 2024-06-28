@@ -52,7 +52,3 @@ we may update this privacy policy from time to time. any changes will be posted 
 
 #### 7. contact us
 if u have any questions or concerns about these terms or the privacy policy, pls reach out to us on discord.
-
-—
-
-hope this helps! let me know if u need any more changes.
