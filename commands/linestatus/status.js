@@ -1,13 +1,14 @@
 const axios = require('axios');
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
-
+const { EmbedBuilder } = require('discord.js');
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('servicestatus')
-		.setDescription('fetches the current disruption status of london transport services'),
-	async execute(interaction) {
-        
+    data: {
+        name: 'networkstatus',
+        description: 'check the status of the transport for london network',
+        "integration_types": [0,1],
+        "contexts": [0,1,2]
+    },
+    async execute(interaction) {   
         await interaction.deferReply();
 
         const response = await axios.get('https://api.tfl.gov.uk/Line/Mode/tube,dlr,tram,elizabeth-line,overground/Status?app_key=32165e2dbd9e4da9a804f88d7495d9d3');
@@ -32,4 +33,4 @@ module.exports = {
 
         await interaction.editReply({content: 'Use `/linestatus` to view more information for a specific line', embeds: [embed]})
     }
-};
+}

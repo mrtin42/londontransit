@@ -4,8 +4,11 @@
 
 # LondonTransit
 
+> **LondonTransit is now available as a user application! For more info, see ['Add to server'](#add-to-server)**
+
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![codebeat badge](https://codebeat.co/badges/4db1b9fd-e976-4203-93be-671952d6f00f)](https://codebeat.co/projects/github-com-t-ub3-londontransit-main)
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/14mic.svg)](https://status.martindev.xyz)
 
 LondonTransit is a discord bot that provides realtime public transport information for London, including the London Underground and the London Bus network, using the [Transport For London Unified API](https://api-portal.tfl.gov.uk/).
 
@@ -13,7 +16,8 @@ LondonTransit is a discord bot that provides realtime public transport informati
 
 #### Real-time information
 
-All returned information is real-time, meaning that you will always know when your next bus or train is coming, and journeys will always be planned to account for current delays and disruptions.
+All returned information is always up to date, meaning that you will always know when your next bus or train is coming, and journeys will always be planned to account for current delays and disruptions.
+> *COMING SOON*: /nextarrivals responses updated LIVE (if user selects option)
 
 #### Easy to use
 
@@ -25,9 +29,9 @@ Wherever LondonTransit cant provide detail, LondonTransit will provide a link to
 
 ## Add to server
 
-To add LondonTransit to your server, click [here](https://discord.com/oauth2/authorize?client_id=1109170357568557156&permissions=517543939136&scope=bot%20applications.commands).
-
-To view this bot on top.gg, click [here](https://top.gg/bot/1109170357568557156).
+To add LondonTransit to your server, click [here](https://discord.com/oauth2/authorize?client_id=1109170357568557156). There are two ways to use LondonTransit:
+- **Bot user**: Add the bot user to a server you manage. Replies are visible to everyone and can be used by all members, even if they havent added the bot themselves (limited to the server the bot user is in)
+- **User app**: Install the app to your personal account, and you can use its commands everywhere, including DMs and Group DMs. (When executed in a server it is not in, messages are forced to only be visible to you if the server has more than 25 members as per Discord policies
 
 ## Contributing
 
@@ -53,7 +57,7 @@ This project is licensed under the GNU General Public License v3.0 - see the [li
 
 ## Contact
 
-Got questions? email me at [martin@tub3.uk](mailto:martin@tub3.uk).
+Got questions? email me at [me@martin.blue](mailto:me@martin.blue).
 
 
 

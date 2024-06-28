@@ -2,15 +2,29 @@ const {EmbedBuilder, SlashCommandBuilder} = require('discord.js');
 const axios = require('axios');
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('cycledock')
-        .setDescription('get the current information for a santander cycle dock')
-        .addStringOption((option) =>
-            option
-                .setName('dock')
-                .setDescription('The name of the dock (usually the road its on)')
-                .setRequired(true)
-        ),
+    // data: new SlashCommandBuilder()
+    //     .setName('cycledock')
+    //     .setDescription('get the current information for a santander cycle dock')
+    //     .addStringOption((option) =>
+    //         option
+    //             .setName('dock')
+    //             .setDescription('The name of the dock (usually the road its on)')
+    //             .setRequired(true)
+    //     ),
+    data: {
+        name: 'cycledock',
+        description: 'get the current information for a santander cycle dock',
+        options: [
+            {
+                name: 'dock',
+                description: 'The name of the dock (usually the road its on)',
+                type: 3,
+                required: true
+            }
+        ],
+        "integration_types": [0,1],
+        "contexts": [0,1,2]
+    },
 
     async execute(interaction) {
         await interaction.deferReply();

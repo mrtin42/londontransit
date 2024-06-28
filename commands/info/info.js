@@ -13,9 +13,15 @@ const botInfo = new EmbedBuilder()
 
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('info')
-		.setDescription('gives bot info'),
+	// data: new SlashCommandBuilder()
+	// 	.setName('info')
+	// 	.setDescription('gives bot info'),
+    data: {
+        name: 'info',
+        description: 'gives bot info',
+        "integration_types": [0,1],
+        "contexts": [0,1,2]
+    },
 
     async execute(interaction) {
         

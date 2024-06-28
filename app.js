@@ -1,8 +1,9 @@
 require('dotenv').config(); //This will be used to store private keys
 const path = require('path');
 const fs = require('fs');
-const deployCommands = require('./deploy/deployCommands');
+const deployCommands = require('./deploy/deployCommands.js');
 const { Client, ActivityType, Collection, Events, GatewayIntentBits, REST, Routes } = require('discord.js');
+const http = require('http');
 
 const BOT_TOKEN = process.env.CLIENT_TOKEN;
 
@@ -35,15 +36,26 @@ deployCommands();
 
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
+	client.user.setActivity('the api', { type: ActivityType.Listening });
+	const uptimeMonitor = http.createServer((req, res) => {
+		res.appendHeader('Content-Type', 'application/json');
+		res.writeHead(200);
+		res.end(JSON.stringify({ status: 'ok' }));
+	} /* betterstack will monitor this endpoint - if it doesnt respond, the server is down and i'll get an alert */);
+	uptimeMonitor.listen(1863); // neat reference to the year the London Underground began operation
+	console.log('Uptime monitor started');
+	// log when uptime monitor endpoint is hit
+	uptimeMonitor.on('request', (req, res) => {
+		const d = new Date();
+		console.log(`Uptime monitor request received from ${req.headers['X-Forwarded-For'] ? `IP ${req.headers['X-Forwarded-For']} (via proxy)` : `IP ${req.socket.remoteAddress}`} at ${d.toISOString()}`);
+	});
 });
 
-client.on("ready", () => {
-	client.user.setActivity('the api', { type: ActivityType.Listening });
-});
+
 
 
 client.on(Events.InteractionCreate, async interaction => {
-    if (!interaction.isChatInputCommand()) return;
+    if (!interaction.isChatInputCommand() && !interaction.isAutocomplete()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
 
@@ -53,11 +65,16 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 
 	try {
-		await command.execute(interaction);
+		if (interaction.isChatInputCommand()) {
+			await command.execute(interaction);
+		} else if (interaction.isAutocomplete()) { 
+			await command.autocomplete(interaction);
+		} else {
+			console.error('An interaction was received that was not a command or autocomplete.');
+		}
 	} catch (error) {
 		console.error(error);
-			await interaction.editReply({ content: 'There was an error while executing this command!'});
-		
+		if (interaction.isChatInputCommand()) await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 
