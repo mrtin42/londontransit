@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+      "allowJs": true, // will change this when i convert all files to ts
       "lib": ["dom", "dom.iterable", "esnext"],
       "skipLibCheck": true,
       "strict": true,
@@ -12,8 +13,13 @@
       "incremental": true,
       "paths": {
         "@/*": ["./*"]
-      }
+      },
+      "typeRoots": [
+        "./node_modules/@types",
+        "./node_modules/discord.js/typings"
+      ],
     },
+    
     "include": ["commands/**/*", "events/**/*", "utils/**/*"],
     "exclude": ["node_modules"]
   }
