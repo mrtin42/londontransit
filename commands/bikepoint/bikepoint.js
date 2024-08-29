@@ -30,13 +30,13 @@ module.exports = {
         await interaction.deferReply();
         const dockName = interaction.options.getString('dock');
 
-        const response = await axios.get(`https://api.tfl.gov.uk/BikePoint/Search?query=${dockName}&app_key=32165e2dbd9e4da9a804f88d7495d9d3&includeHubs=false`);
+        const response = await axios.get(`https://api.tfl.gov.uk/BikePoint/Search?query=${dockName}&app_key=${process.env.TFL_APP_KEY}&includeHubs=false`);
 
         if (!response.data[0]) {
             return interaction.editReply('No dock found with that name.');
         } else {
             const dockId = response.data[0].id;
-            const dockData = await axios.get(`https://api.tfl.gov.uk/BikePoint/${dockId}?app_key=32165e2dbd9e4da9a804f88d7495d9d3`);
+            const dockData = await axios.get(`https://api.tfl.gov.uk/BikePoint/${dockId}?app_key=${process.env.TFL_APP_KEY}`);
 
                 const embed = new EmbedBuilder()
                     .setTitle(`${dockData.data.commonName}`)

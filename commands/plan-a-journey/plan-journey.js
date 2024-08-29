@@ -63,8 +63,8 @@ module.exports = {
         return;
       }
     
-      const originNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${origin}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
-      const destinNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${destination}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,bus,national-rail,dlr&includeHubs=false`);
+      const originNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${origin}?app_key=${process.env.TFL_APP_KEY}&modes=tube,bus,national-rail,dlr&includeHubs=false`);
+      const destinNaptan = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${destination}?app_key=${process.env.TFL_APP_KEY}&modes=tube,bus,national-rail,dlr&includeHubs=false`);
 
       if (!originNaptan.data.matches[0]) {
         await interaction.editReply('Origin station was not found')
@@ -73,7 +73,7 @@ module.exports = {
         await interaction.editReply('Destination station was not found')
         return;
       } else {
-        const response = await axios.get(`https://api.tfl.gov.uk/Journey/JourneyResults/${originNaptan.data.matches[0].id}/to/${destinNaptan.data.matches[0].id}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&mode=tube,bus,national-rail,walking,dlr`);
+        const response = await axios.get(`https://api.tfl.gov.uk/Journey/JourneyResults/${originNaptan.data.matches[0].id}/to/${destinNaptan.data.matches[0].id}?app_key=${process.env.TFL_APP_KEY}&mode=tube,bus,national-rail,walking,dlr`);
 
 
         const embed = new EmbedBuilder()

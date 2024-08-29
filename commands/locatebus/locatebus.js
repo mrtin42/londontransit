@@ -24,7 +24,7 @@ module.exports = {
 	async execute(interaction) {
         const regPlate = interaction.options.getString('registration');
 
-		const response = await axios.get(`https://api.tfl.gov.uk/Vehicle/${regPlate}/Arrivals?app_key=32165e2dbd9e4da9a804f88d7495d9d3`);
+		const response = await axios.get(`https://api.tfl.gov.uk/Vehicle/${regPlate}/Arrivals?app_key=${process.env.TFL_APP_KEY}`);
 
 		await interaction.deferReply();
 

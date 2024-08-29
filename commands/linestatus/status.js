@@ -11,7 +11,7 @@ module.exports = {
     async execute(interaction) {   
         await interaction.deferReply();
 
-        const response = await axios.get('https://api.tfl.gov.uk/Line/Mode/tube,dlr,tram,elizabeth-line,overground/Status?app_key=32165e2dbd9e4da9a804f88d7495d9d3');
+        const response = await axios.get(`https://api.tfl.gov.uk/Line/Mode/tube,dlr,tram,elizabeth-line,overground/Status?app_key=${process.env.TFL_APP_KEY}`);
 
         const embed = new EmbedBuilder()
           .setAuthor(

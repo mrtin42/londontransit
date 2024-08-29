@@ -39,12 +39,12 @@ module.exports = {
     async execute(interaction) {
       await interaction.deferReply();
       const stationName = interaction.options.getString('station');
-      const response = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${stationName}?app_key=32165e2dbd9e4da9a804f88d7495d9d3&modes=tube,dlr,overground,tram,elizabeth-line,replacement-bus,river-bus&includeHubs=false`);
+      const response = await axios.get(`https://api.tfl.gov.uk/StopPoint/Search/${stationName}?app_key=${process.env.TFL_APP_KEY}&modes=tube,dlr,overground,tram,elizabeth-line,replacement-bus,river-bus&includeHubs=false`);
 
         
       const stationCode = response.data.matches[0].id;
 
-      const naptanArrivals = await axios.get(`https://api.tfl.gov.uk/StopPoint/${stationCode}/Arrivals?app_key=32165e2dbd9e4da9a804f88d7495d9d3`)
+      const naptanArrivals = await axios.get(`https://api.tfl.gov.uk/StopPoint/${stationCode}/Arrivals?app_key=${process.env.TFL_APP_KEY}`)
 
       // Sort the arrivalsData array by timeToStation in ascending order
       const sortedArrivals = naptanArrivals.data.sort((a, b) => a.timeToStation - b.timeToStation);
