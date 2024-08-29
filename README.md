@@ -41,7 +41,73 @@ If you've found a bug, you can either open an issue or email me at [hello@london
 
 ## Commands
 
-Documentation coming soon.
+### Table of Contents
+- [Service Status](#servicestatus)
+- [Line Status](#linestatus)
+- [Journey Planner](#journey)
+- [Next Arrivals](#nextarrivals)
+- [Locate Bus](#locatebus)
+- [Cycle Dock](#cycledock)
+- [Bot Info](#info)
+
+### Introduction
+LondonTransit offers a variety of commands to help you navigate London's transport network. Below is a detailed list of available commands, their descriptions, and usage examples.
+
+### `/servicestatus`
+Displays the current status of the TfL network.
+
+**Usage Example:**
+```
+/servicestatus
+```
+
+### `/linestatus {line}`
+Displays the current status of a specific TfL line.
+
+**Usage Example:**
+```
+/linestatus Central
+```
+
+### `/journey {origin} {destination}`
+Displays the fastest route between two stations. Shows results inline with current service availability.
+
+**Usage Example:**
+```
+/journey King's Cross St. Pancras Waterloo
+```
+
+### `/nextarrivals {station}`
+Displays the next arrivals at a specific station. *currently only supports the tube*
+
+**Usage Example:**
+```
+/nextarrivals Victoria
+```
+
+### `/locatebus {regplate}`
+Displays the current location of a specific bus.
+
+**Usage Example:**
+```
+/locatebus LTZ1748
+```
+
+### `/cycledock {dock}`
+Displays the current availability of a specific cycle dock. *protip: the name is usually the road its on*
+
+**Usage Example:**
+```
+/cycledock Baker Street
+```
+
+### `/info`
+Displays information about the bot.
+
+**Usage Example:**
+```
+/info
+```
 
 ## License
 
@@ -58,7 +124,3 @@ This project is licensed under the GNU General Public License v3.0 - see the [li
 ## Contact
 
 Got questions? email me at [me@martin.blue](mailto:me@martin.blue).
-
-
-
-
