@@ -1,6 +1,5 @@
 const { EmbedBuilder, SlashCommandBuilder, ButtonBuilder} = require('discord.js');
 const axios = require('axios');
-const noti = require('../../utils/newsystemembed.js');
 const autocomplete = require('../../utils/autocomplete/station.js');
 
 module.exports = {
@@ -77,7 +76,7 @@ module.exports = {
       try {
         await interaction.editReply({
           content: ` `,
-          embeds: [embed, noti]
+          embeds: [embed]
         });
       } catch (error) {
          console.error(error);
