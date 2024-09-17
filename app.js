@@ -1,32 +1,19 @@
-require('dotenv').config();
-import path from 'path';
-import fs from 'fs';
-import deployCommands from './deploy/deployCommands.js';
-import { Client, ActivityType, Collection, Events, GatewayIntentBits, REST, Routes } from 'discord.js';
-import http from 'http';
-import { PrismaClient } from '@prisma/client';
-// import poller from './utils/notifications/poller.js';
-
-declare module 'discord.js' {
-	interface Client {
-		commands: Collection<string, any>;
-	}
-}
+require('dotenv').config(); //This will be used to store private keys
+const path = require('path');
+const fs = require('fs');
+const deployCommands = require('./deploy/deployCommands.js');
+const { Client, ActivityType, Collection, Events, GatewayIntentBits, REST, Routes } = require('discord.js');
+const http = require('http');
 
 const BOT_TOKEN = process.env.CLIENT_TOKEN;
 
-const botClient = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-const dbClient = new PrismaClient();
-
-botClient.commands = new Collection();
+client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
-// im gonna put the notification poller here because its more important than the commands :kek:
-//
-// soonTM
 
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
@@ -36,7 +23,7 @@ for (const folder of commandFolders) {
 		const command = require(filePath);
 		// Set a new item in the Collection with the key as the command name and the value as the exported module
 		if ('data' in command && 'execute' in command) {
-			botClient.commands.set(command.data.name, command);
+			client.commands.set(command.data.name, command);
 		} else {
 			console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 		}
@@ -47,9 +34,9 @@ for (const folder of commandFolders) {
 deployCommands();
 
 
-botClient.once(Events.ClientReady, c => {
+client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
-	botClient.user?.setActivity('the api', { type: ActivityType.Listening }); // because this runs when the bot is ready, there is no way that botClient.user is null
+	client.user.setActivity('the api', { type: ActivityType.Listening });
 	const uptimeMonitor = http.createServer((req, res) => {
 		res.appendHeader('Content-Type', 'application/json');
 		res.writeHead(200);
@@ -64,7 +51,10 @@ botClient.once(Events.ClientReady, c => {
 	});
 });
 
-botClient.on(Events.InteractionCreate, async interaction => {
+
+
+
+client.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand() && !interaction.isAutocomplete()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
@@ -84,11 +74,11 @@ botClient.on(Events.InteractionCreate, async interaction => {
 		}
 	} catch (error) {
 		console.error(error);
-		if (interaction.isChatInputCommand()) await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		if (interaction.isChatInputCommand()) await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 
-botClient.login(BOT_TOKEN);
+client.login(BOT_TOKEN);
 
 // arrival.line_name,
 //`Destination: ${arrival.destination}\nEstimated Arrival: ${arrival.estimated_arrival}`,
