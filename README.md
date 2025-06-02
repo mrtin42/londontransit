@@ -5,8 +5,6 @@
 # LondonTransit
 
 > **LondonTransit has begun the transition to a TypeScript codebase.** You can see the progress in the language contents bar.
-> 
-> Due to a recent *TfL-wide cyber attack*, live information may be unavailable. Please consult official TfL channels for more information.
 
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![codebeat badge](https://codebeat.co/badges/4db1b9fd-e976-4203-93be-671952d6f00f)](https://codebeat.co/projects/github-com-t-ub3-londontransit-main)
