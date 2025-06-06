@@ -1,0 +1,54 @@
+---
+title: 'Next Arrivals'
+description: 'Get the next arrivals for a specific station'
+icon: 'square-slash'
+---
+
+```
+/nextarrivals <station>
+```
+
+## Overview
+The `/nextarrivals` command provides real-time information about the next arrivals at a specified London transport station.
+<Note>
+  This command currently only supports London Underground stations, however we plan to expand it to include other London rail services in the future.
+</Note>
+
+## Response
+It returns an embed with the 4 closest upcoming arrivals for the specified station. Each arrival includes:
+- **Line Name**: The name of the transport line.
+- **Destination**: The final destination of the train.
+- **Time Until Arrival**: The time remaining until the train arrives at the station.
+
+For example, if you were to check the next arrivals at Leicester Square station, the response might look like this:
+<Card
+  title="Leicester Square Station"
+  description="Next Arrivals"
+  color="#FF0000"
+>
+  **Northern**\
+  Destination: Morden via Bank\
+  Time Until Arrival: Due now\
+  \
+  **Piccadilly**\
+  Destination: Cockfosters\
+  Time Until Arrival: 2 minutes\
+  \
+  **Northern**\
+  Destination: High Barnet via Bank\
+  Time Until Arrival: 3 minutes\
+  \
+  **Piccadilly**\
+  Destination: Heathrow T2+3 & T5\
+  Time Until Arrival: 5 minutes
+</Card>
+
+
+## Parameters
+<ParamField
+  path="station"
+  type="string"
+  required
+>
+  The name of the station you want to check. This can be any London Underground station, such as "Baker Street", "Oxford Circus", or "Waterloo".
+</ParamField>

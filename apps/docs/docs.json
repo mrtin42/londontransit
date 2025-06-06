@@ -1,0 +1,72 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "LondonTransit Documentation",
+  "colors": {
+    "primary": "#0a1357",
+    "light": "#007FFF",
+    "dark": "#0a1357"
+  },
+  "favicon": "/favicon.png",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "index",
+              "installation"
+            ]
+          },   
+          {
+            "group": "Commands",
+            "pages": [
+              "commands/commands-introduction",
+              "commands/network-status",
+              "commands/line-status",
+              "commands/next-arrivals",
+              "commands/journey",
+              "commands/locate-bus",
+              "commands/cycle-dock"
+            ]
+          },
+          {
+            "group": "Technical",
+            "pages": [
+              "technical/troubleshooting"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "dark": "/brand/lt.svg",
+    "light": "/brand/lt.svg",
+    "href": "https://londontransit.org.uk"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "https://www.md3v.co.uk/contact"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Add to Discord",
+      "href": "https://discord.com/api/oauth2/authorize?client_id=1138858709306260510&permissions=8&scope=bot%20applications.commands"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/t_ub3",
+      "github": "https://github.com/mrtin42/londontransit"
+    }
+  },
+  "icons": {
+    "library": "lucide"
+  }
+}

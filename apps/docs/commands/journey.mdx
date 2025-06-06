@@ -1,0 +1,63 @@
+---
+title: 'Journey Planner'
+description: 'Plan a journey using London public transport'
+icon: 'square-slash'
+---
+
+```
+/journey <from> <to>
+```
+
+## Overview
+The `/journey` command allows you to plan a journey using London's public transport system. It provides detailed information about the route, including the lines used, changes required, and estimated travel time.
+
+<Info>
+  This command provides journey planning for any location in the UK, not just London. However, it is recommended to use station names or well-known landmarks and use only for journeys that start and end in the London area.
+</Info>
+<Tip>
+  Use the autocomplete options to provide the most accurate origin and destination for your journey.
+</Tip>
+
+## Response
+It returns an embed outlining the journey details, including:
+- **Estimated Travel Time**: The total time expected for the journey.
+- **Steps**: A list of steps required to complete the journey, including:
+  - **Travel Mode**: The mode of transport (e.g., Tube, Bus, Train).
+  - **Stops**: The start and end points of each step.
+  - **Line Name**: The name of the transport line used for that step.
+
+For example, if you were to plan a journey from "Buckingham Palace" to "London Bridge", the response might look like this:
+<Card
+  title="Journey from Buckingham Palace to London Bridge"
+  description="Estimated Travel Time: 45 minutes"
+  color="#FF0000"
+>
+  This journey will take 21 minutes.\
+  \
+  **13 bus towards Victoria Station**\
+  Buckingham Palace Road / Bressenden Place stop P to Victoria Station stop E\
+  \
+  **District Line**\
+  Victoria Station to Westminster Station\
+  \
+  **Jubilee Line**\
+  Westminster Station to London Bridge Station
+</Card>
+
+
+
+## Parameters
+<ParamField
+  path="origin"
+  type="string"
+  required
+>
+  The starting point of your journey. This can be any location in the UK, but to prevent recognising a different place with the same name, it is recommended to use a station name or a well-known landmark.
+</ParamField>
+<ParamField
+  path="destination"
+  type="string"
+  required
+>
+  The destination of your journey. Similar to the origin, it is best to use a station name or a well-known landmark to ensure accuracy.
+</ParamField>

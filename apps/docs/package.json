@@ -1,0 +1,11 @@
+{
+  "name": "@londontransit/docs",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "mint dev",
+    "build": "mint build",
+    "preview": "mint preview",
+    "lint": "echo 'No linting configured for docs.'",
+    "start": "echp 'This app does not have a start script. Commit and push changes to deploy on Mintlify.'"
+  }
+}

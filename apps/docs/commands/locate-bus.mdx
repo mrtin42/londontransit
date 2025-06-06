@@ -1,0 +1,40 @@
+---
+title: 'Locate Bus'
+description: 'Find a buses current route and location'
+icon: 'square-slash'
+---
+
+```
+/locatebus <bus>
+```
+
+## Overview
+The `/locatebus` command allows you to find the current route and location of a specific bus in London. It provides real-time information about the bus's route and the next stop.
+<Note>
+  If the bus is not currently in service, LondonTransit will be told that the bus's information is not available.
+</Note>
+
+## Response
+It returns an embed with the following information for the specified bus:
+- **Route and Direction**: The bus route number and the direction it is heading.
+- **Next Stop**: The next stop the bus will make.
+- **Estimated Arrival**: The estimated time until the bus arrives at the next stop.
+
+For example, if you were to locate a bus with the registration plate "LG23EVB", the response might look like this:
+<Card
+  title="LG23EVB is currently operating the 57 to Clapham Park, Atkins Road"
+  description="Next Stop: South Wimbledon Station"
+  color="#FF0000"
+>
+  The next stop will be **South Wimbledon Station**\
+  It should arrive in approximately **2 minute(s)**.
+</Card>
+
+## Parameters
+<ParamField
+  path="bus"
+  type="string"
+  required
+>
+  The bus registration plate you want to locate, such as "LG21ABC", "YX20XYZ", or "LTZ1234". This can be any bus currently operating in London.
+</ParamField>

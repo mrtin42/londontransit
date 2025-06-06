@@ -1,14 +1,14 @@
 <a href="https://londontransit.org.uk">
-    <img src="https://londontransit.org.uk/assets/images/botlogo.svg" alt="LOGO" title="LondonTransit" align="right" height="60"/>
+    <img src="https://londontransit.org.uk/brand/lt.svg" alt="LOGO" title="LondonTransit" align="right" height="60"/>
 </a>
 
 # LondonTransit
 
-> **LondonTransit has begun the transition to a TypeScript codebase.** You can see the progress in the language contents bar.
+> **LondonTransit has begun the transition to a TypeScript codebase.** You can see the progress in the language contents bar -->
 
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![codebeat badge](https://codebeat.co/badges/4db1b9fd-e976-4203-93be-671952d6f00f)](https://codebeat.co/projects/github-com-t-ub3-londontransit-main)
-[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/14mic.svg)](https://status.martindev.xyz)
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/14mic.svg)](https://status.mbfrias.com)
 
 LondonTransit is a discord bot that provides realtime public transport information for London, including the London Underground and the London Bus network, using the [Transport For London Unified API](https://api-portal.tfl.gov.uk/).
 
@@ -31,7 +31,7 @@ Wherever LondonTransit cant provide detail, LondonTransit will provide a link to
 
 To add LondonTransit to your server, click [here](https://discord.com/oauth2/authorize?client_id=1109170357568557156). There are two ways to use LondonTransit:
 - **Bot user**: Add the bot user to a server you manage. Replies are visible to everyone and can be used by all members, even if they havent added the bot themselves (limited to the server the bot user is in)
-- **User app**: Install the app to your personal account, and you can use its commands everywhere, including DMs and Group DMs. Response visibility in servers it is not in is dictated by server permissions.
+- **User app**: Install the app to your personal account, and you can use its commands everywhere, including DMs and Group DMs. (When executed in a server it is not in, messages are forced to only be visible to you if the server has more than 25 members as per Discord policies
 
 ## Contributing
 

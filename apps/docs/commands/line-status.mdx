@@ -1,0 +1,36 @@
+---
+title: 'Line Status'
+description: 'Check the current status of a specific London transport line'
+icon: 'square-slash'
+---
+
+```
+/linestatus <line>
+```
+
+## Overview
+The `/linestatus` command allows you to check the current status of a specific London transport line.
+
+## Response
+It returns an embed with the following information for the specified line:
+- **Line Name**: The name of the line.
+- **Status and Description**: The current operational status of the line, including causes and advice for passengers.
+
+For example, if the Jubilee line is part suspended due to a signal failure, the status will show as:
+<Card
+  title="Jubilee Line"
+  description="Part Suspended"
+  color="#FF0000"
+>
+  Jubilee Line: No service between Waterloo and Stanmore while we fix a signal failure at Charing Cross. Tickets are being accepted on London Underground and London Buses via any reasonable route.
+</Card>
+
+## Parameters
+<ParamField
+  path="line"
+  type="string"
+  required
+>
+  The name of the transport line you want to check. This can be any TfL-operated rail service, such as "Jubilee", "Mildmay", or "DLR".
+</ParamField>
+

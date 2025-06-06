@@ -1,19 +1,86 @@
 require('dotenv').config(); //This will be used to store private keys
+const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 const deployCommands = require('./deploy/deployCommands.js');
-const { Client, ActivityType, Collection, Events, GatewayIntentBits, REST, Routes } = require('discord.js');
+const { Client, ActivityType, Collection, Events, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 const http = require('http');
+const { PrismaClient } = require('@prisma/client');
 
 const BOT_TOKEN = process.env.CLIENT_TOKEN;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+const db = new PrismaClient();
 
 client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
+// just putting this here so it forces me into the DB
+db.user.create({
+	data: {
+		discordId: '488061232461381643',
+		lines: {
+			create: {
+				name: 'bakerloo'
+			}
+		}
+	}
+});
+
+const statusPoller = async () => {
+	const d = new Date();
+	console.log(`Polling status at ${d.toISOString()}`);
+
+	const lines = axios.get(`https://api.tfl.gov.uk/Line/Mode/tube/Status?app_key=${process.env.TFL_APP_KEY}`).then(async (response) => {
+		for (const line of response.data) {
+			const lineName = line.name;
+			const status = line.lineStatuses[0].statusSeverity;
+			const prevStatus = db.lines.findFirst({
+				where: {
+					name: lineName
+				}
+			});
+			if (prevStatus.statusCode !== status) {
+				const statusDesc = line.lineStatuses[0].statusSeverityDescription;
+				const embed = new EmbedBuilder()
+					.setColor(status === 10 ? '#00FF00' : '#FF0000')
+					.setTitle(`Status of the ${lineName} line has changed`)
+					.setDescription(statusDesc);
+				// trigger a message to be sent to registered users
+				const users = await db.user.findMany({
+					where: {
+						notifications: {
+							has: 'bakerloo'
+						}
+					}
+				});
+				console.log(`users: ${users}`);
+				for (const user of users) {
+					client.users.fetch(user.discordId).then(u => {
+						console.log(`Sending message to ${u.username}`);
+						u.send(`⚠️ The status of the ${lineName} line has changed`, { embeds: [embed] });
+					});
+				}
+				// update the status in the database
+				db.lines.update({
+					where: {
+						name: lineName
+					},
+					data: {
+						statusCode: status
+					}
+				});
+			}
+		}
+	});
+}
+
+// Poll the status of the tube lines every minute
+setInterval(statusPoller, 60000);
+statusPoller();
 
 for (const folder of commandFolders) {
 	const commandsPath = path.join(foldersPath, folder);
@@ -74,7 +141,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		}
 	} catch (error) {
 		console.error(error);
-		if (interaction.isChatInputCommand()) await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
+		if (interaction.isChatInputCommand()) await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 

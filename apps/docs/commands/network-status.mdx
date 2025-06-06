@@ -1,0 +1,27 @@
+---
+title: "Network Status"
+description: "Check the current status of London's transport network"
+icon: 'square-slash'
+---
+
+```
+/networkstatus
+```
+
+## Overview
+The `/networkstatus` command provides real-time information about the status of TfL-operated rail services.
+
+
+## Response
+It returns an embed with the following information for each line:
+- **Line Name**: The name of the line.
+- **Status**: The current operational status of the line.
+
+For example, if Jubilee line is suspended, the status will show as:
+<Card
+  title="Jubilee Line"
+  description="Suspended"
+  color="#FF0000"
+>
+  Suspended
+</Card>

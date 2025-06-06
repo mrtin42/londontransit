@@ -1,0 +1,42 @@
+---
+title: 'Cycle Dock'
+description: 'Get the status of a specific cycle dock'
+icon: 'square-slash'
+---
+
+```
+/cycledock <dock>
+```
+
+## Overview
+The `/cycledock` command allows you to check the status of a specific Santander Cycle dock in London. It provides real-time information about the number of available bikes and spaces at the specified dock.
+
+## Response
+It returns an embed with the following information for the specified dock:
+- **Dock Name**: The name of the cycle dock.
+- **Available Bikes**: The number of bikes currently available at the dock.
+  - **of which, E-Bikes**: The number of docked bikes which are E-Bikes.
+- **Total Spaces**: The total number of spaces available for docking bikes (including currently occupied spaces).
+- **Location**: The geographical coordinates of the dock.
+
+For example, if you were to check the status on Park Road near Regent's Park, the response might look like this:
+<Card
+  title="Park Road (Baker Street), Regent's Park"
+  description="Dock Status"
+  color="#FF0000"
+>
+  **Docked Bikes**: 8\
+  **Docked E-Bikes**: 2\
+  **Total Docks**: 22\
+  **Latitude**: 51.5241\
+  **Longitude**: -0.1589
+</Card>
+
+## Parameters
+<ParamField
+  path="dock"
+  type="string"
+  required
+>
+  The name of the cycle dock you want to check. In most cases, this will be the name of a nearby landmark or TfL station, such as "Waterloo Station", or the road it is located on, such as "Baker Street". 
+</ParamField>

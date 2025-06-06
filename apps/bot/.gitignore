@@ -1,0 +1,20 @@
+# node modules (generated on runtime and is too massive anyway)
+node_modules
+
+# local secrets (VERY VERY SECRETO NOT FOR SHAREING!!!!!!11!!!)
+.env
+
+# npm lock files (generated on runtime)
+package-lock.json
+
+# macOS finder metadata (its gonna muck up command registering)
+.DS_Store
+
+# jetbrains (local workspace settings)
+.idea
+
+# vscode (local workspace settings)
+.vscode
+
+# turborepo (local cache)
+.turbo
