@@ -1,6 +1,5 @@
 {
   "name": "@londontransit/bot",
-  "type": "commonjs",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -8,7 +7,7 @@
     "dev": "echo 'This bot has no specific dev requirements. Running standard Node.js.'; node app.js",
     "build": "echo 'This bot does not require a build step.'",
     "lint": "echo 'No linting configured for this bot.'",
-    "start": "node app.js"
+    "start": "npx tsx index.ts"
   },
   "author": "",
   "license": "ISC",

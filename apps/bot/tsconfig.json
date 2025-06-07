@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+      "target": "es5",
+      "module": "commonjs",
+      "allowJs": true,
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "downlevelIteration": true,
+      "paths": {
+          "@/*": ["./*"]
+      },
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist", "build", "coverage", "test"]
+}

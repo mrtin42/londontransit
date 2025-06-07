@@ -4,123 +4,42 @@
 
 # LondonTransit
 
-> **LondonTransit has begun the transition to a TypeScript codebase.** You can see the progress in the language contents bar -->
+> **LondonTransit has begun the transition to a fully TypeScript codebase.** Progress has begun with merging all related repositories into a monorepo, and the bots codebase is now being converted to TypeScript. The JavaScript phase-out can be tracked in the languages content bar on the right side of the page -->
 
+[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![codebeat badge](https://codebeat.co/badges/8e8ec514-51fb-4684-838e-e7fb8afceefa)](https://codebeat.co/projects/github-com-mrtin42-londontransit-master)
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/14mic.svg)](https://status.mbfrias.com)
+![Star Count](https://img.shields.io/github/stars/mrtin42/londontransit)
 
-LondonTransit is a discord bot that provides realtime public transport information for London, including the London Underground and the London Bus network, using the [Transport For London Unified API](https://api-portal.tfl.gov.uk/).
 
-## Features
+LondonTransit brings you the latest information about London's public transport system, including live train times, service updates, and more. It is designed to be a comprehensive resource for residents, visitors to, and rail enthusiasts in London, providing real-time data and insights into the city's transport network.
 
-#### Real-time information
+**[View the documentation ——>](https://docs.londontransit.org.uk)**
 
-All returned information is always up to date, meaning that you will always know when your next bus or train is coming, and journeys will always be planned to account for current delays and disruptions.
-> *COMING SOON*: /nextarrivals responses updated LIVE (if user selects option)
 
-#### Easy to use
+## Tech Stack
+[![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)[![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://www.javascript.com/)[![Turborepo](https://img.shields.io/badge/Turborepo-%230F0813.svg?style=for-the-badge&logo=Turborepo&logoColor=white)](https://turbo.build/repo)
 
-LondonTransit is easy to use, with a simple command structure and a easy-to-read format.
+Bot:
+- [Node.js](https://nodejs.org/en/) - Runtime
+- [Discord.js](https://discord.js.org/) - API Wrapper
+- [Axios](https://axios-http.com/) - HTTP Client
+- [TfL Unified API](https://api-portal.tfl.gov.uk/) - Data Source
 
-#### View more information
+Web:
+- [Next.js](https://nextjs.org/) - Framework
+- [Vercel](https://vercel.com/) - Hosting
+- [Tailwind CSS](https://tailwindcss.com/) - CSS Framework
 
-Wherever LondonTransit cant provide detail, LondonTransit will provide a link to the TFL website, where you can find more information. Journey Planner will also display this journey on the TFL website.
+Docs:
+- [Mintlify](https://mintlify.com/) - Framework + Hosting
 
-## Add to server
+<hr/>
+&copy; 2025 <a href="https://github.com/mrtin42">MartinD3V</a> and contributors.
+<br /><br />
 
-To add LondonTransit to your server, click [here](https://discord.com/oauth2/authorize?client_id=1109170357568557156). There are two ways to use LondonTransit:
-- **Bot user**: Add the bot user to a server you manage. Replies are visible to everyone and can be used by all members, even if they havent added the bot themselves (limited to the server the bot user is in)
-- **User app**: Install the app to your personal account, and you can use its commands everywhere, including DMs and Group DMs. (When executed in a server it is not in, messages are forced to only be visible to you if the server has more than 25 members as per Discord policies
+[LondonTransit](https://londontransit.org.uk) is licensed under the [GPL-3.0 License](LICENSE). LondonTransit uses open data provided by [Transport for London](https://tfl.gov.uk) under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/). LondonTransit is not affiliated with Transport for London or any other transport authority.
 
-## Contributing
+[Terms of Service](https://londontransit.org.uk/legal/terms) | [Privacy Policy](https://londontransit.org.uk/legal/privacy)
 
-Your help is always appreciated, as I am one man working on this and teamwork makes the dream work. If you would like to contribute, please feel free to fork this repository and make a pull request. If you would like to discuss a feature, please open an issue. CONTRIBUTING.md will be coming soon.
-
-If you've found a bug, you can either open an issue or email me at [hello@londontransit.org.uk](mailto:hello@londontransit.org.uk)
-
-## Commands
-
-### Table of Contents
-- [Service Status](#servicestatus)
-- [Line Status](#linestatus)
-- [Journey Planner](#journey)
-- [Next Arrivals](#nextarrivals)
-- [Locate Bus](#locatebus)
-- [Cycle Dock](#cycledock)
-- [Bot Info](#info)
-
-### Introduction
-LondonTransit offers a variety of commands to help you navigate London's transport network. Below is a detailed list of available commands, their descriptions, and usage examples.
-
-### `/servicestatus`
-Displays the current status of the TfL network.
-
-**Usage Example:**
-```
-/servicestatus
-```
-
-### `/linestatus {line}`
-Displays the current status of a specific TfL line.
-
-**Usage Example:**
-```
-/linestatus Central
-```
-
-### `/journey {origin} {destination}`
-Displays the fastest route between two stations. Shows results inline with current service availability.
-
-**Usage Example:**
-```
-/journey King's Cross St. Pancras Waterloo
-```
-
-### `/nextarrivals {station}`
-Displays the next arrivals at a specific station. *currently only supports the tube*
-
-**Usage Example:**
-```
-/nextarrivals Victoria
-```
-
-### `/locatebus {regplate}`
-Displays the current location of a specific bus.
-
-**Usage Example:**
-```
-/locatebus LTZ1748
-```
-
-### `/cycledock {dock}`
-Displays the current availability of a specific cycle dock. *protip: the name is usually the road its on*
-
-**Usage Example:**
-```
-/cycledock Baker Street
-```
-
-### `/info`
-Displays information about the bot.
-
-**Usage Example:**
-```
-/info
-```
-
-## License
-
-This project is licensed under the GNU General Public License v3.0 - see the [license](LICENSE) file for details.
-
-## Acknowledgements
-
--   [TfL Unified API](https://api-portal.tfl.gov.uk/)
--   [Discord.js](https://discord.js.org/#/)
--   [Node.js](https://nodejs.org/en/)
--   [Axios](https://axios-http.com/)
--   [GitHub](https://github.co.uk/)
-
-## Contact
-
-Got questions? email me at [me@martin.blue](mailto:me@martin.blue).
