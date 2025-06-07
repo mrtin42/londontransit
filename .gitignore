@@ -15,3 +15,6 @@ package-lock.json
 
 # vscode (local workspace settings)
 .vscode
+
+# turbo cache (generated on runtime)
+.turbo
