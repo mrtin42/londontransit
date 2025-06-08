@@ -10,7 +10,7 @@
       "forceConsistentCasingInFileNames": true,
       "downlevelIteration": true,
       "paths": {
-          "@/*": ["./*"]
+          "@/*": ["apps/bot/*"],
       },
   },
   "include": ["**/*.ts"],

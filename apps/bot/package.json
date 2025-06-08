@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "echo 'This bot has no specific dev requirements. Running standard Node.js.'; node app.js",
+    "dev": "echo 'Development mode: Disabling dub.co link shortening.'&& NODE_ENV=development npx tsx index.ts",
     "build": "echo 'This bot does not require a build step.'",
     "lint": "echo 'No linting configured for this bot.'",
     "start": "npx tsx index.ts"
@@ -16,6 +16,7 @@
     "chalk": "^5.3.0",
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
+    "dub": "^0.62.4",
     "follow-redirects": "^1.15.2"
   },
   "devDependencies": {

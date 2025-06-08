@@ -1,18 +1,20 @@
 import 'dotenv/config';
-import { ActivityType, Client, Collection, Events, GatewayIntentBits } from 'discord.js';
+import { ActivityType, Client, Collection, Events, GatewayIntentBits, AutocompleteInteraction, CommandInteraction } from 'discord.js';
 import chalk from 'chalk';
 import axios from 'axios';
 import path from 'path';
 import http from 'http';
 import fs from 'fs';
 import deploy from './deploy';
-import { AutocompleteInteraction, CommandInteraction } from './node_modules/discord.js/typings/index';
+import { Dub } from 'dub';
 
 interface ExtendedClient extends Client {
   commands: Collection<string, { data: { name: string }, execute: (interaction: CommandInteraction | AutocompleteInteraction) => Promise<void>, autocomplete?: (interaction: AutocompleteInteraction) => Promise<void> }>;
 }
 
 const { CLIENT_TOKEN } = process.env;
+
+export const dub = new Dub();
 
 const c = new Client({
   intents: [GatewayIntentBits.Guilds],
