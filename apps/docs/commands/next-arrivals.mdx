@@ -4,15 +4,15 @@ description: 'Get the next arrivals for a specific station'
 icon: 'square-slash'
 ---
 
+import Snippet from '/snippets/seperateSames.mdx'
+
 ```
 /nextarrivals <station>
 ```
 
 ## Overview
 The `/nextarrivals` command provides real-time information about the next arrivals at a specified London transport station.
-<Note>
-  This command currently only supports London Underground stations, however we plan to expand it to include other London rail services in the future.
-</Note>
+<Snippet />
 
 ## Response
 It returns an embed with the 4 closest upcoming arrivals for the specified station. Each arrival includes:

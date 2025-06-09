@@ -1,7 +1,7 @@
 import { SlashCommandBuilder, EmbedBuilder, CommandInteraction, ContainerBuilder, TextDisplayBuilder, SeparatorBuilder, SectionBuilder, ButtonBuilder, ButtonStyle, MessageFlags, AutocompleteInteraction } from 'discord.js';
 import axios from 'axios';
 import chalk from 'chalk';
-import { station } from "@/utils/autocomplete";
+import { isAutocompleteChoice, station } from "@/utils/autocomplete";
 import { Section } from '@react-email/components';
 import { dub } from '@/index';
 import { LinkSchema } from 'dub/dist/commonjs/models/components';
@@ -31,7 +31,7 @@ async function execute(interaction: CommandInteraction) {
 
   const from = interaction.options.get('from')?.value as string;
   const to = interaction.options.get('to')?.value as string;
-  if (!from.startsWith('auto:') || !to.startsWith('auto:')) {
+  if (!isAutocompleteChoice(from) || !isAutocompleteChoice(to)) {
     return interaction.editReply({ content: 'Please select a station from the autocomplete suggestions.' });
   }
   const f = from.split(':')[1];
@@ -117,7 +117,7 @@ async function execute(interaction: CommandInteraction) {
           **Adult fare:** ${
             fare.includes('Variable') ? fare : `£${fare}`
           }${
-            fare.includes('Variable') ? '' : ` ${journey.fare.fares[0].chargeLevel}`
+            fare.includes('Variable') ? '' : ` ${journey.fare.fares[0].chargeLevel || 'anytime'}`
           }\n**Duration:** ${journey.duration} minutes\n
           `))
         .setButtonAccessory(new ButtonBuilder().setURL(link.shortLink).setLabel('View on tfl.gov.uk').setStyle(ButtonStyle.Link))

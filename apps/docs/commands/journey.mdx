@@ -4,6 +4,8 @@ description: 'Plan a journey using London public transport'
 icon: 'square-slash'
 ---
 
+import Snippet from '/snippets/seperateSames.mdx'
+
 ```
 /journey <from> <to>
 ```
@@ -12,11 +14,9 @@ icon: 'square-slash'
 The `/journey` command allows you to plan a journey using London's public transport system. It provides detailed information about the route, including the lines used, changes required, and estimated travel time.
 
 <Info>
-  This command provides journey planning for any location in the UK, not just London. However, it is recommended to use station names or well-known landmarks and use only for journeys that start and end in the London area.
+  This command provides journey planning for any station in the UK, but it is most effective for London public transport.
 </Info>
-<Tip>
-  Use the autocomplete options to provide the most accurate origin and destination for your journey.
-</Tip>
+<Snippet />
 
 ## Response
 It returns an embed outlining the journey details, including:
@@ -60,4 +60,13 @@ For example, if you were to plan a journey from "Buckingham Palace" to "London B
   required
 >
   The destination of your journey. Similar to the origin, it is best to use a station name or a well-known landmark to ensure accuracy.
+</ParamField>
+
+<ParamField
+  path="date"
+  type="string"
+  required
+  default="now"
+>
+  The date and time for the journey. If not specified, it defaults to the current time.
 </ParamField>
