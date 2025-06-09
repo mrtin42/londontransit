@@ -18,6 +18,11 @@ export async function station(query: string): Promise<StationChoice[]> {
         if (!match.id.startsWith('9')) { // this isnt a NAPTAN ID, so we should not use it
           console.warn('Skipping match with non-NAPTAN ID:', match.id);
           return null; // skip this match
+        } else if (response.data.matches.indexOf(match) > 24) {
+          if (response.data.matches.indexOf(match) === 25) {
+            console.warn('Hitting Discord-set maximum autocomplete results, stopping further processing.');
+          }
+          return null; // skip this match, as we have hit the maximum number of results Discord allows for autocomplete
         } else {
           console.log('Found station:', match.name, 'with ID:', match.id);
           return {

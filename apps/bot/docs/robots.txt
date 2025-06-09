@@ -1,6 +1,0 @@
-# londontransit.org.uk/robots.text
-User-agent: *
-Disallow: /assets/
-Disallow: /README.md
-Disallow: /mkdocs.yml
-Disallow: /404.html
