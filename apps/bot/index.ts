@@ -27,16 +27,13 @@ client.once(Events.ClientReady, () => {
   console.log(chalk.green(`LondonTransit online as ${client.user?.tag}`));
   client.user?.setActivity('the status updates', { type: ActivityType.Watching });
   const uptimeMonitor = http.createServer((req, res) => {
+    console.log(chalk.blue(`Uptime monitor received request from ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`));
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({
       status: 'ok',
     }));
     uptimeMonitor.listen(1863 /* nice nod to the year the London Underground opened */);
     console.log(chalk.blue('Uptime monitor is running on port 1863'));
-    uptimeMonitor.on('request', (req, res) => {
-      console.log(chalk.blue(`Received request from ${req.headers['x-forwarded-for'] || req.connection.remoteAddress}`));
-    });
-
   });
 });
 
