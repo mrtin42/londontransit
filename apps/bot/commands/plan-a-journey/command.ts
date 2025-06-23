@@ -7,6 +7,126 @@ import { dub } from '@/index';
 import { LinkSchema } from 'dub/dist/commonjs/models/components';
 import { transportModeEmojis } from '@/utils/constants/emoji';
 
+type RelevantInfoObject = {
+  from: string;
+  to: string;
+  fare: string;
+  duration: number;
+  link: string;
+  legs: {
+    route: string;
+    mode: string;
+    emoji: string;
+    from: string;
+    to: string;
+    duration: number;
+  }[];
+}
+
+type RelevantInfoError = {
+  error: string;
+}
+
+function dateCheck(date: string | null): string | false {
+  if (!date) return false; // no date provided, so we will use the current date
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
+  if (dateRegex.test(date)) {
+    return new Date(date).toISOString(); // valid date format, return ISO string
+  } else {
+    console.warn(chalk.yellow('Invalid date format provided, resetting to null.'));
+    return false; // invalid date format, reset to null
+  }
+}
+
+function assembleJourneySteps(embed: ContainerBuilder, info: RelevantInfoObject): ContainerBuilder {
+      let description = '';
+    for (const leg of info.legs) {
+      const { from, to, emoji, route, mode, duration } = leg;
+      if (leg.mode === 'walking') {
+        description += `*${info.legs.indexOf(leg) + 1}.* **Walking**:\n> _Refer to the linked website for detailed walking instructions._\n`;
+      } else {
+        description += `*${info.legs.indexOf(leg) + 1}.* ${emoji} **${route}${mode === 'tube' || mode === 'overground' ? ' line' : ''}**:\n`;
+        description += `> **From:** ${from}\n> **To:** ${to}\n> **Duration:** ${duration} minutes\n`;
+      }
+      // } else if (leg.mode.id === 'bus') {
+      //   const route = leg.instruction.detailed;
+      //   const legDuration = leg.duration;
+      //   const from = `${leg.departurePoint.commonName}, stop ${leg.departurePoint.stopLetter}`;
+      //   const to = `${leg.arrivalPoint.commonName}, stop ${leg.arrivalPoint.stopLetter}`;
+      //   description += `*${legs.indexOf(leg) + 1}.* `;
+      //   description += `${transportModeEmojis.find(emoji => emoji.mode === 'bus')?.markdown || ''} `;
+      //   description += `**${route}**:\n> **From:** ${from}\n> **To:** ${to}\n> **Duration:** ${legDuration} minutes\n`; 
+      // } else if (leg.mode.id === 'walking') {
+      //   description += `*${legs.indexOf(leg) + 1}.* **Walking**:\n> _Refer to the linked website for detailed walking instructions._\n`;
+      // } else {
+      //   description += `*${legs.indexOf(leg) + 1}.* **${leg.mode.name}**:\n> _Refer to the linked website for detailed instructions._\n`;
+      // }
+    }
+    return embed.addTextDisplayComponents(new TextDisplayBuilder().setContent(description));
+
+}
+
+async function relevantInfo(journey: any): Promise<RelevantInfoObject | RelevantInfoError> {
+  if (!journey || !journey.legs || journey.legs.length === 0) {
+    console.warn(chalk.yellow('Journey data is incomplete or missing legs.'));
+    return { error: 'Journey data is incomplete or missing legs.' };
+  }
+  const { from, to } = { from: journey.legs[0].departurePoint.commonName || 'Unknown Origin', to: journey.legs[journey.legs.length - 1].arrivalPoint.commonName || 'Unknown Destination' };
+  const fare = (() => {
+    if (!journey.fare) {
+      console.warn(chalk.yellow('No fare information found for the journey.'));
+      return 'Variable: visit website for details';
+    }
+    if (!journey.fare.totalCost) {
+      console.warn(chalk.yellow('No total fare cost found for the journey.'));
+      return 'Variable: visit website for details';
+    }
+    return `£${(journey.fare.totalCost / 100).toFixed(2)} (${journey.fare.fares[0].chargeLevel || 'anytime'})`;
+  })();
+  const duration = journey.duration || 0; // default to 0 if duration is not provided - will be displayed as 'Unknown Duration' in the embed
+  const fullLink = new URL(`https://tfl.gov.uk/plan-a-journey/results/`);
+  fullLink.searchParams.append('InputFrom', from);
+  fullLink.searchParams.append('FromId', journey.legs[0].departurePoint.icsId);
+  fullLink.searchParams.append('InputTo', to);
+  fullLink.searchParams.append('ToId', journey.legs[journey.legs.length - 1].arrivalPoint.icsId);
+  let link: string;
+  if (process.env.NODE_ENV === 'development') {
+    console.warn(chalk.yellow('Development mode: not shortening the link to avoid hitting plan link limit.'));
+    link = fullLink.toString(); // in development mode, we will not shorten the link to avoid hitting the plan link limit
+  } else {
+    link = (await dub.links.create({
+      url: fullLink.toString(),
+      prefix: '/j/',
+      domain: 'ldnts.it'
+    })).shortLink || fullLink.toString(); // fallback to the original link if there's an error creating the short link
+  }
+  const legs = journey.legs.map((leg: any) => {
+    const route = (() => {
+      if (leg.mode.id === 'bus') {
+        return leg.instruction.detailed || 'Unknown Route';
+      } else if (leg.mode.id === 'walking') {
+        return 'Walking';
+      } else if (leg.mode.id === 'tube' || leg.mode.id === 'dlr' || leg.mode.id === 'overground' || leg.mode.id === 'national-rail' || leg.mode.id === 'elizabeth-line' || leg.mode.id === 'tram') {
+        return leg.routeOptions[0]?.name || 'Unknown Route';
+      }
+    })();
+    const mode = leg.mode.id || 'Unknown Mode';
+    const emoji = transportModeEmojis.find(e => e.mode === leg.mode.id)?.markdown || '';
+    const from = leg.departurePoint.commonName || 'Unknown Origin';
+    const to = leg.arrivalPoint.commonName || 'Unknown Destination';
+    const duration = leg.duration || 0; // default to 0 if duration is not provided
+    return { route, mode, emoji, from, to, duration };
+  });
+  return {
+    from,
+    to,
+    fare,
+    duration,
+    link,
+    legs
+  };
+}
+
 const data = new SlashCommandBuilder()
   .setName('journey')
   .setDescription('Plan a journey between two points')
@@ -36,14 +156,20 @@ async function execute(interaction: CommandInteraction) {
   }
   const f = from.split(':')[1];
   const t = to.split(':')[1];
-  let date = interaction.options.get('date')?.value as string | null;
+  // let date = interaction.options.get('date')?.value as string | null;
   let invalidDate = false;
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
-  if (date && !dateRegex.test(date)) {
-    date = null; // reset date to null; conditional code will see false and use current date instead
-    invalidDate = true;
+  // const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
+  // if (date && !dateRegex.test(date)) {
+  //   date = null; // reset date to null; conditional code will see false and use current date instead
+  //   invalidDate = true;
+  // }
+  // const formattedDate = date ? new Date(date).toISOString() : new Date().toISOString();
+  const date = interaction.options.get('date')?.value as string | null;
+  const formattedDate = dateCheck(date);
+  if (formattedDate === false) {
+    console.warn(chalk.yellow('Invalid date format provided, resetting to null.'));
+    invalidDate = true; // set invalidDate to true so we can inform the user later
   }
-  const formattedDate = date ? new Date(date).toISOString() : new Date().toISOString();
 
   try {
     const response = await axios.get(`https://api.tfl.gov.uk/Journey/JourneyResults/${f}/to/${t}?app_key=${process.env.TFL_APP_KEY}${date ? `&date=${formattedDate}` : ''}`);
@@ -52,101 +178,30 @@ async function execute(interaction: CommandInteraction) {
       return interaction.editReply({ content: 'No journeys found for the specified route and date.' });
     }
     const journey = response.data.journeys[0]; /* who needs multiple journeys? you dont bring pieces of yourself at different times */
-    // const fromName: string = response.data.journeyVector.from;
-    // const toName: string = response.data.journeyVector.to;
-    // this would have returned the strings given to the API - since we are using NAPTAN IDs, we should determine the names from the departure point of the first leg of the journey and the arrival point of the last leg of the journey
-    const fromLeg = journey.legs[0];
-    const toLeg = journey.legs[journey.legs.length - 1];
-    const fromName = fromLeg.departurePoint.commonName || 'Unknown Origin';
-    const toName = toLeg.arrivalPoint.commonName || 'Unknown Destination';
-    console.log(chalk.blue('Journey found:') + chalk.green(` ${fromName} to ${toName}`));
-
-    // generate tfl.gov.uk journey planner link, with appropriate URL encoding
-    const tflJourneyLink = new URL(`https://tfl.gov.uk/plan-a-journey/results/`);
-    // example link for my reference when debugging: https://tfl.gov.uk/plan-a-journey/results?InputFrom=Oxford+Circus+Underground+Station&FromId=1000173&InputTo=Colliers+Wood+Underground+Station&ToId=1000055&Date=20250621&Time=1900
-    tflJourneyLink.searchParams.append('InputFrom', fromName);
-    tflJourneyLink.searchParams.append('FromId', fromLeg.departurePoint.icsId);
-    tflJourneyLink.searchParams.append('InputTo', toName);
-    tflJourneyLink.searchParams.append('ToId', toLeg.arrivalPoint.icsId);
-    // if date is provided, append it to the link in the format YYYYMMDD
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
-    if (date) {
-      const [year, month, day] = date.split('-');
-      tflJourneyLink.searchParams.append('Date', `${year}${month}${day}`); // TFL expects date in YYYYMMDD format
-    }
-    date && tflJourneyLink.searchParams.append('date', date);
-    console.log(chalk.blue('Generated TFL journey link:') + chalk.green(` ${tflJourneyLink.toString()}`));
-    let link: {
-      shortLink: string;
-    } | LinkSchema;
-    if (process.env.NODE_ENV === 'development') {
-      console.log(chalk.yellow('Development mode: to avoid hitting plan link limit, not shortening the link.'));
-      link = { shortLink: tflJourneyLink.toString() };
-    } else {
-      link = await dub.links.create({
-        url: tflJourneyLink.toString(),
-        prefix: '/j/',
-        domain: 'ldnts.it'
-      }).catch((error: any) => {
-        console.error(chalk.red('Error creating short link:'), error);
-        return { shortLink: tflJourneyLink.toString() }; // fallback to the original link if there's an error
-      });
-      if (!link || !link.shortLink) {
-        console.error(chalk.red('Failed to create a short link, using the original link instead.'));
-        link = { shortLink: tflJourneyLink.toString() };
-      }
-    }
-    console.log(chalk.blue('Shortened TFL journey link:') + chalk.green(` ${link.shortLink}`));
     if (!journey) {
       return interaction.editReply({ content: 'No journey found for the specified route and date.' });
     };
-    // divide the journey fare by 100 to convert from pence to pounds and put to two decimal places. if no fares listed, return 'Variable: visit website for details'
-    let fare: string;
-    if (!journey.fare || !journey.fare.totalCost) {
-      console.warn(chalk.yellow('No fare information found for the journey.'));
-      fare = 'Variable: visit website for details';
-    } else {
-      fare = (journey.fare.totalCost / 100).toFixed(2);
+    // const fromName: string = response.data.journeyVector.from;
+    // const toName: string = response.data.journeyVector.to;
+    // this would have returned the strings given to the API - since we are using NAPTAN IDs, we should determine the names from the departure point of the first leg of the journey and the arrival point of the last leg of the journey
+    const info = await relevantInfo(journey);
+    if ('error' in info) {
+      console.warn(chalk.yellow(info.error));
+      return interaction.editReply({ content: 'An error occurred while processing the journey data. Please try again later.' });
     }
+    console.log(chalk.blue('Shortened TFL journey link:') + chalk.green(` ${info.link}`));
+    // divide the journey fare by 100 to convert from pence to pounds and put to two decimal places. if no fares listed, return 'Variable: visit website for details'
 
-    const embed = new ContainerBuilder()
-      .addTextDisplayComponents(new TextDisplayBuilder().setContent(`## ${fromName} to ${toName}`))
+    const one = new ContainerBuilder()
+      .addTextDisplayComponents(new TextDisplayBuilder().setContent(`## ${info.from} to ${info.to}`))
       .addSeparatorComponents(new SeparatorBuilder())
       .addSectionComponents(new SectionBuilder()
         .addTextDisplayComponents(new TextDisplayBuilder().setContent(`
-          **Adult fare:** ${
-            fare.includes('Variable') ? fare : `£${fare}`
-          }${
-            fare.includes('Variable') ? '' : ` ${journey.fare.fares[0].chargeLevel || 'anytime'}`
-          }\n**Duration:** ${journey.duration} minutes\n
+          **Adult fare:** ${info.fare}\n**Duration:** ${info.duration} minutes\n
           `))
-        .setButtonAccessory(new ButtonBuilder().setURL(link.shortLink).setLabel('View on tfl.gov.uk').setStyle(ButtonStyle.Link))
+        .setButtonAccessory(new ButtonBuilder().setURL(info.link).setLabel('View on tfl.gov.uk').setStyle(ButtonStyle.Link))
       );
-    let description = '';
-    for (const leg of journey.legs) {
-      if (leg.mode.id === 'tube' || leg.mode.id === 'dlr' || leg.mode.id === 'overground' || leg.mode.id === 'national-rail' || leg.mode.id === 'elizabeth-line' || leg.mode.id === 'tram') {
-        const routeName = leg.routeOptions[0].name;
-        const legDuration = leg.duration;
-        const from = leg.departurePoint.commonName;
-        const to = leg.arrivalPoint.commonName;
-        description += `*${journey.legs.indexOf(leg) + 1}.* `;
-        description += `${transportModeEmojis.find(emoji => emoji.mode === leg.mode.id)?.markdown || ''} `;
-        description += `**${routeName}${leg.mode.id === 'tube' || leg.mode.id === 'overground' ? ' line' : ''}**:\n> **From:** ${from}\n> **To:** ${to}\n> **Duration:** ${legDuration} minutes\n`;
-      } else if (leg.mode.id === 'bus') {
-        const route = leg.instruction.detailed;
-        const legDuration = leg.duration;
-        const from = `${leg.departurePoint.commonName}, stop ${leg.departurePoint.stopLetter}`;
-        const to = `${leg.arrivalPoint.commonName}, stop ${leg.arrivalPoint.stopLetter}`;
-        description += `*${journey.legs.indexOf(leg) + 1}.* `;
-        description += `${transportModeEmojis.find(emoji => emoji.mode === 'bus')?.markdown || ''} `;
-        description += `**${route}**:\n> **From:** ${from}\n> **To:** ${to}\n> **Duration:** ${legDuration} minutes\n`; 
-      } else if (leg.mode.id === 'walking') {
-        description += `*${journey.legs.indexOf(leg) + 1}.* **Walking**:\n> _Refer to the linked website for detailed walking instructions._\n`;
-      } else {
-        description += `*${journey.legs.indexOf(leg) + 1}.* **${leg.mode.name}**:\n> _Refer to the linked website for detailed instructions._\n`;
-      }
-    }
-    embed.addTextDisplayComponents(new TextDisplayBuilder().setContent(description));
+    const embed = assembleJourneySteps(one, info);
     if (invalidDate) {
       embed.addSeparatorComponents(new SeparatorBuilder()).addTextDisplayComponents(new TextDisplayBuilder().setContent('**Note:** The date you provided was invalid, so the current date was used instead.'));
     }

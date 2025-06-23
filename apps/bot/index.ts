@@ -32,9 +32,9 @@ client.once(Events.ClientReady, () => {
     res.end(JSON.stringify({
       status: 'ok',
     }));
-    uptimeMonitor.listen(1863 /* nice nod to the year the London Underground opened */);
-    console.log(chalk.blue('Uptime monitor is running on port 1863'));
   });
+  uptimeMonitor.listen(1863);
+  console.log(chalk.blue('Uptime monitor is running on port 1863'));
 });
 
 for (const folder of fs.readdirSync(path.join(__dirname, 'commands'))) {
