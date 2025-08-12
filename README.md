@@ -6,9 +6,9 @@
 
 > **LondonTransit has begun the transition to a fully TypeScript codebase.** Progress has begun with merging all related repositories into a monorepo, and the bots codebase is now being converted to TypeScript. The JavaScript phase-out can be tracked in the languages content bar on the right side of the page -->
 
-[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
-[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
+[![Maintainability](https://qlty.sh/gh/mrtin42/projects/londontransit/maintainability.svg)](https://qlty.sh/gh/mrtin42/projects/londontransit)
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/14mic.svg)](https://status.mbfrias.com)
+[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 ![Star Count](https://img.shields.io/github/stars/mrtin42/londontransit)
 
 
