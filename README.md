@@ -8,7 +8,6 @@
 
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
-[![codebeat badge](https://codebeat.co/badges/8e8ec514-51fb-4684-838e-e7fb8afceefa)](https://codebeat.co/projects/github-com-mrtin42-londontransit-master)
 [![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/14mic.svg)](https://status.mbfrias.com)
 ![Star Count](https://img.shields.io/github/stars/mrtin42/londontransit)
 
