@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { ActivityType, Client, Collection, Events, GatewayIntentBits, AutocompleteInteraction, CommandInteraction } from 'discord.js';
+import { ActivityType, Client, Collection, Events, GatewayIntentBits, AutocompleteInteraction, CommandInteraction, MessageFlags } from 'discord.js';
 import chalk from 'chalk';
 import axios from 'axios';
 import path from 'path';
@@ -7,6 +7,7 @@ import http from 'http';
 import fs from 'fs';
 import deploy from './deploy';
 import { Dub } from 'dub';
+import { networkStatusButtonHandler } from './commands/status/network/buttons';
 
 interface ExtendedClient extends Client {
   commands: Collection<string, { data: { name: string }, execute: (interaction: CommandInteraction | AutocompleteInteraction) => Promise<void>, autocomplete?: (interaction: AutocompleteInteraction) => Promise<void> }>;
@@ -54,28 +55,59 @@ for (const folder of fs.readdirSync(path.join(__dirname, 'commands'))) {
 
 deploy();
 client.on(Events.InteractionCreate, async (interaction) => {
-  if (!interaction.isChatInputCommand() && !interaction.isAutocomplete()) return !interaction.isAutocomplete() ? await interaction.reply({ content: 'This command is not supported.', ephemeral: true }) : undefined;
-  const command = (client as ExtendedClient).commands.get(interaction.commandName);
-  if (!command) {
-    console.warn(chalk.red(`Command ${interaction.commandName} not found.`));
-    !interaction.isAutocomplete() && await interaction.reply({ content: 'This command is not supported.', ephemeral: true });
-    return;
-  }
   try {
     if (interaction.isChatInputCommand()) {
+        const command = (client as ExtendedClient).commands.get(interaction.commandName);
+        if (!command) {
+          console.warn(chalk.red(`Command ${interaction.commandName} not found.`));
+          !interaction.isAutocomplete() && await interaction.reply({ content: 'This command is not supported.', ephemeral: true });
+          return;
+        }
       await command.execute(interaction);
     } else if (interaction.isAutocomplete()) {
+        const command = (client as ExtendedClient).commands.get(interaction.commandName);
+        if (!command) {
+          console.warn(chalk.red(`Command ${interaction.commandName} not found.`));
+          return await interaction.respond([]);
+        }
       if (!command.autocomplete) {
         console.warn(chalk.yellow(`Command ${interaction.commandName} does not support autocomplete.`));
         await interaction.respond([]);
         return;
       }
       await command.autocomplete(interaction) as any;
+    } else if (interaction.isButton()) {
+      if (interaction.customId.startsWith('status-panel-')) {
+        await networkStatusButtonHandler(interaction);
+        return;
+      } else {
+        // i dont have many buttons so just handle them here for now.
+        await interaction.reply({ content: 'Unknown button interaction. This should never happen, please contact developer.', flags: [MessageFlags.Ephemeral] });
+        return;
+      }
     }
   } catch (error) {
-    console.error(chalk.red(`Error executing command ${interaction.commandName}:`), error);
+    console.error(chalk.red(`Error executing command:`), error);
     if (!interaction.isAutocomplete()) {
-      await interaction.reply({ content: 'There was an error while executing this command.', ephemeral: true });
+      try {
+        await interaction.reply({ content: 'There was an error while executing this command.', flags: [MessageFlags.Ephemeral] });
+      } catch (replyError) {
+        if (replyError instanceof Error && replyError.message.includes('already been replied to')) {
+          try {
+            await interaction.editReply({ content: 'There was an error while executing this command.' });
+          } catch (editError) {
+            console.error(chalk.red('Also failed to edit reply:'), editError);
+            try {
+              await interaction.followUp({ content: 'There was an error while executing this command.', flags: [MessageFlags.Ephemeral] });
+            } catch (followUpError) {
+              console.error(chalk.red('are you fucking serious i give up: '), followUpError);
+              return;
+            }
+          }
+        } else {
+          console.error(chalk.red('Failed to reply to interaction:'), replyError);
+        }
+      }
     }
   }
 });

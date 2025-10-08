@@ -83,6 +83,11 @@ async function relevantInfo(journey: any): Promise<RelevantInfoObject | Relevant
     }
     return `£${(journey.fare.totalCost / 100).toFixed(2)} (${journey.fare.fares[0].chargeLevel || 'anytime'})`;
   })();
+  /**
+   * example link
+   * https://tfl.gov.uk/plan-a-journey/results?InputFrom=Colliers+Wood+Underground+Station&FromId=1000055&InputTo=Lewisham+Station&ToId=1001177
+   */
+
   const duration = journey.duration || 0; // default to 0 if duration is not provided - will be displayed as 'Unknown Duration' in the embed
   const fullLink = new URL(`https://tfl.gov.uk/plan-a-journey/results/`);
   fullLink.searchParams.append('InputFrom', from);
