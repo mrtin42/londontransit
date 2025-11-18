@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { ActivityType, Client, Collection, Events, GatewayIntentBits, AutocompleteInteraction, CommandInteraction, MessageFlags } from 'discord.js';
+import { ActivityType, Client, Collection, Events, GatewayIntentBits, AutocompleteInteraction, CommandInteraction, MessageFlags, EmbedBuilder } from 'discord.js';
 import chalk from 'chalk';
 import axios from 'axios';
 import path from 'path';
@@ -111,6 +111,29 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
   }
 });
+
+process.on("uncaughtException", (e) => {
+  console.log(chalk.bgRedBright("[ERR] UNCAUGHT EXCEPTION"))
+  console.error(e);
+  console.log(chalk.bgRedBright("------------------------"))
+
+  const whUrl = process.env.ERROR_WEBHOOK_URL;
+  if (whUrl) {
+    axios.post(whUrl, {
+      content: `**⚠️ | An uncaught exception occurred in runtime.**`,
+      embeds: new EmbedBuilder()
+        .addFields(
+          { name: 'Error Message', value: `\`\`\`${e.message}\`\`\`` },
+          { name: 'Stack Trace', value: `\`\`\`${e.stack?.substring(0, 1014) || 'No stack trace available.'}\`\`\`` }
+        )
+        .setColor('Red')
+        .setTimestamp().toJSON(),
+    }).catch(err => {
+      console.error(chalk.red('Failed to send error to webhook: '), err);
+    });
+  }
+  // dont exit bc we want the bot to keep running
+})
 
 client.login(CLIENT_TOKEN).catch(error => {
   console.error(chalk.red('Failed to login to Discord: '), error);
