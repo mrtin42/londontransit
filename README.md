@@ -38,7 +38,7 @@ Docs:
 &copy; 2025 <a href="https://github.com/mrtin42">MartinD3V</a> and contributors.
 <br /><br />
 
-[LondonTransit](https://londontransit.org.uk) is licensed under the [GPL-3.0 License](LICENSE). LondonTransit uses open data provided by [Transport for London](https://tfl.gov.uk) under the [Open Government Licence v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/). LondonTransit is not affiliated with Transport for London or any other transport authority.
+[LondonTransit](https://londontransit.org.uk) is licensed under the [GPL-3.0 License](LICENSE). LondonTransit uses open data provided by [Transport for London](https://tfl.gov.uk) under the [Open Government Licence v2.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/2/). LondonTransit is not affiliated with Transport for London or any other transport authority.
 
 [Terms of Service](https://londontransit.org.uk/legal/terms) | [Privacy Policy](https://londontransit.org.uk/legal/privacy)
 
